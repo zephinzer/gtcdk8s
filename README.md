@@ -12,6 +12,7 @@ Developer-onboarding taking ages because of required supporting services? Having
 - VirtualBox
 
 ## Workshop Objectives
+
 | Objective | Details | Technology Used |
 | :-------- | :------ | :-------------- |
 | Prepare services for container-based deployments | Learn what goes into an application that works well in a container-based deployment model| Node.js |
