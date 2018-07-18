@@ -25,6 +25,8 @@ Kubectl is now configured to use the cluster.
 Loading cached images from config file.
 ```
 
+You should also be able to run `node`, `docker`, `docker-compose`, `kubectl`, and `vboxmanage` without any `No command ${CMD} found` errors.
+
 ## VirtualBox
 VirtualBox is the hypervisor that we will use to create the single-node cluster.
 
