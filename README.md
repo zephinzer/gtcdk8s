@@ -5,8 +5,8 @@
 Developer-onboarding taking ages because of required supporting services? Having issues with "*but it works on my machine*"-like complaints? Searching for a way to deploy your application reliably and in an automated manner? Sounds like you need containers! Enter the world of containerisation for both the development and production environment with this short workshop which will cover building container-based deployments friendly applications, containerising services effectively, and deploying them - all with good ol' shell scripting automation for good taste.
 
 ## Technologies Involved
-- Node.js
 - Shell Scripting
+- Node.js
 - Docker
 - Kubernetes
 - VirtualBox
@@ -19,7 +19,7 @@ Developer-onboarding taking ages because of required supporting services? Having
 | Containerise a custom web service with Docker | Learn how to containerise a custom web application using Docker | Docker |
 | Provision supporting services with Docker | Learn how to provision and manage a development environment using Docker Compose so that developers can start working on actual code without caring about support services which your application depends on | Docker |
 | Simulate a production deployment | Learn how to test-run a Kubernetes deployment without touching production (y'know, just in case) | Kubernetes |
-| Automating & optimising container building | Learn how Docker and Kubernetes are used together in a continuous integration/delivery (CI/CD) pipeline to deliver working software | Docker |
+| Automating & optimising container building | Learn how Docker and Kubernetes are used together in a continuous integration/delivery (CI/CD) pipeline to deliver working software | Docker, Shell Scripting |
 
 ## Target Audience
 This is a hands-on workshop with the most utility for software engineers looking into the art of DevOps.
@@ -37,4 +37,4 @@ It is very highly recommended that you are on MacOS ([get a Mac](https://sg.caro
 ### Software
 It is highly recommended that the command `minikube start` works on your machine before the workshop as this workshop will be conducted in a constrained period of time.
 
-Follow the instructions at [this page](./00-setup/README.md) to get your machine ready for the workshop!
+Follow the instructions at [THIS PAGE](./00-setup/README.md) to get your machine ready for the workshop!
