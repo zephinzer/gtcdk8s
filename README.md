@@ -13,6 +13,13 @@ Sounds like you could do with some container technology! Enter the world of cont
 - Kubernetes
 - VirtualBox
 
+## Topics
+1. [A containerisable application](./01-application/README.md)
+2. [Containerising an application](./02-containerising/README.md)
+3. [Provisioning an environment](./03-provisioning/README.md)
+4. [Deploying an application](./04-deploying/README.md)
+5. [Continuous integration/delivery](./05-cicd/README.md)
+
 ## Workshop Objectives
 
 | Objective | Details | Technology Used |
@@ -20,6 +27,7 @@ Sounds like you could do with some container technology! Enter the world of cont
 | Prepare services for container-based deployments | Learn what goes into an application that works well in a container-based deployment model| Node.js |
 | Containerise a custom web service with Docker | Learn how to containerise a custom web application using Docker | Docker |
 | Provision supporting services with Docker | Learn how to provision and manage a development environment using Docker Compose so that developers can start working on actual code without caring about support services which your application depends on | Docker |
+| Deploying with Kubernetes | Learn what is Kubernetes and experience a deployment on it | Kubernetes |
 | Simulate a production deployment | Learn how to test-run a Kubernetes deployment without touching production (y'know, just in case) | Kubernetes |
 | Automating & optimising container building | Learn how Docker and Kubernetes are used together in a continuous integration/delivery (CI/CD) pipeline to deliver working software | Docker, Shell Scripting |
 
