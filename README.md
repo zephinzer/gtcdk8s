@@ -39,7 +39,9 @@ This is a hands-on workshop with the most utility for software engineers looking
 Workshop participants should:
 1. Be comfortable working with the command line
 2. Have experience with software engineering
-3. Have some experience with deployment and operations
+3. Have a little experience with deployment and operations
+
+Other roles are welcome too, but you might not get the most out of this!
 
 ### Machine
 It is very highly recommended that you are on MacOS ([get a Mac on Carousell](https://sg.carousell.com/search/products/?query=macbook%20pro%202015)). All commands have been tested to work for UNIX-based environments, but there are some issues you'll need to fix if you're using a Linux box and you need to be very comfortable with system internals for it to work out.
