@@ -2,7 +2,9 @@
 > Courseware for a Docker & Kubernetes workshop.
 
 ## Synopsis
-Developer-onboarding taking ages because of required supporting services? Having issues with "*but it works on my machine*"-like complaints? Searching for a way to deploy your application reliably and in an automated manner? Sounds like you need containers! Enter the world of containerisation for both the development and production environment with this short workshop which will cover building container-based deployments friendly applications, containerising services effectively, and deploying them - all with good ol' shell scripting automation for good taste.
+Developer-onboarding taking ages because of required supporting services? Having issues with "*but it works on my machine*"-like complaints? Searching for a way to deploy your application reliably and in an automated manner?
+
+Sounds like you could do with some container technology! Enter the world of containerisation for both the development and production environment with this short workshop which will cover building container-based deployments friendly applications, containerising services effectively, and deploying them - all with good ol' shell scripting automation for good taste.
 
 ## Technologies Involved
 - Shell Scripting
