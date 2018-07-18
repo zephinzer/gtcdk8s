@@ -1,22 +1,39 @@
-# Kubernetes Workshop at GovTech Con 2018
-This repository contains courseware for the Kubernetes Workshop done at GovTech Con 2018 in Singapore.
+# Effective Containerisation From Development To Production
+> Courseware for a Docker & Kubernetes workshop.
 
-## Pre-Requisites
-This is a technical workshop and is designed for engineers with knowledge/experience in system administration.
+## Synopsis
+Developer-onboarding taking ages because of required supporting services? Having issues with "*but it works on my machine*"-like complaints? Searching for a way to deploy your application reliably and in an automated manner? Sounds like you need containers! Enter the world of containerisation for both the development and production environment with this short workshop which will cover building container-based deployments friendly applications, containerising services effectively, and deploying them - all with good ol' shell scripting automation for good taste.
 
-## Some Jargon
-Throughout this course, Kubernetes will also be known as k8s. The term, k8s, comes about from kubernetes being too long and the `'k'` and `'s'` having 8 characters between them.
+## Technologies Involved
+- Node.js
+- Shell Scripting
+- Docker
+- Kubernetes
+- VirtualBox
 
-## Pre-Course Software
-> Install these before you get to the workshop!
+## Workshop Objectives
+| Objective | Details | Technology Used |
+| --- | --- | --- |
+| Prepare services for container-based deployments | Learn what goes into an application that works well in a container-based deployment model| Node.js |
+| Containerise a custom web service with Docker | Learn how to containerise a custom web application using Docker | Docker |
+| Provision supporting services with Docker | Learn how to provision and manage a development environment using Docker Compose so that developers can start working on actual code without caring about support services which your application depends on | Docker |
+| Simulate a production deployment |
+| Automating & optimising container building |
 
-It is highly recommended that the command `minikube start` works on your machine before the workshop so that we can move along faster.
+## Target Audience
+This is a hands-on workshop with the most utility for software engineers looking into the art of DevOps.
 
-1. [VirtualBox](./01-setting-up/virtual-box.md)
-2. [Docker (Community-Edition)](./01-setting-up/docker.md)
-3. [Kubectl](./01-setting-up/kubectl.md)
-4. [MiniKube](./01-setting-up/minikube.md)
+## Should Haves
+### Skills
+Participants should:
+1. Be comfortable working with the command line
+2. Have experience with software engineering
+3. Have some experience with deployment and operations
 
+### Machine
+It is very highly recommended that you are on MacOS ([get a Mac](https://sg.carousell.com/search/products/?query=macbook%20pro%202015)). All commands have been tested to work for UNIX-based environments, but there are more issues you'll need to fix if you're using a Linux box. Use Windows at your own discretion - using a virtual machine is not encouraged since we will be running a virtual machine as part of this workshop.
 
-## References
-1. https://kubernetes.io/docs/tasks/tools/install-minikube/
+### Software
+It is highly recommended that the command `minikube start` works on your machine before the workshop as this workshop will be conducted in a constrained period of time.
+
+Follow the instructions at [this page](./00-setup/README.md) to get your machine ready for the workshop!
