@@ -13,7 +13,7 @@ Developer-onboarding taking ages because of required supporting services? Having
 
 ## Workshop Objectives
 | Objective | Details | Technology Used |
-| --- | --- | --- |
+| :-------- | :------ | :-------------- |
 | Prepare services for container-based deployments | Learn what goes into an application that works well in a container-based deployment model| Node.js |
 | Containerise a custom web service with Docker | Learn how to containerise a custom web application using Docker | Docker |
 | Provision supporting services with Docker | Learn how to provision and manage a development environment using Docker Compose so that developers can start working on actual code without caring about support services which your application depends on | Docker |
