@@ -50,3 +50,13 @@ It is very highly recommended that you are on MacOS ([get a Mac on Carousell](ht
 It is highly recommended that the command `minikube start` works on your machine before the workshop as this workshop will be conducted in a constrained period of time.
 
 Follow the instructions at [THIS PAGE](./00-setup/README.md) to get your machine ready for the workshop!
+
+## About The Workshop Facilitator
+Joseph is a DevOps engineer hailing from the Agile Consulting & Engineering tribe at Government Digital Services. He spends his day optimising and maintaining CI/CD pipelines and making the codebase easier to work with for developers. By night he writes (mostly useless) software in an attempt to gain further englightenment in the art of architecture evolution in software. He enjoys evangelising on deployment-related affairs in software engineering and thinks the world would be a better place if more developers understood DevOps and made it a culture instead of a role.
+
+Check out his articles at [https://medium.com/@joeir](https://medium.com/@joeir) and his (wasteland of) projects at [https://github.com/zephinzer](https://github.com/zephinzer).
+
+- - -
+
+## Cheers
+It's weird writing about myself as a third party ^. See you there!
