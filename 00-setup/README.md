@@ -4,7 +4,7 @@ This section should be completed **BEFORE** the workshop and can take up to an h
 The required software are as follows:
 
 1. [VirtualBox](#virtualbox)
-2. [Node.js](#node-js)
+2. [Node.js](#nodejs)
 3. [Docker (with Compose)](#docker-with-compose)
 4. [kubectl](#kubectl)
 5. [MiniKube](#minikube)
@@ -28,11 +28,11 @@ Loading cached images from config file.
 ## VirtualBox
 VirtualBox is the hypervisor that we will use to create the single-node cluster.
 
-Go to this link - https://www.virtualbox.org/wiki/Downloads - and download the appropriate binary for your platform.
+Go to this link - [https://www.virtualbox.org/wiki/Downloads](https://www.virtualbox.org/wiki/Downloads) - and download the appropriate binary for your platform.
 
-For Linux users, follow the instructions at this page: https://www.virtualbox.org/wiki/Linux_Downloads.
+For Linux users, follow the instructions at this page: [https://www.virtualbox.org/wiki/Linux_Downloads](https://www.virtualbox.org/wiki/Linux_Downloads).
 
-> **Note** If you're running Ubuntu on a machine with Secure Boot enabled, the easier way is to use another machine. If you choose to continue with this, follow the steps in [./virtualbox-on-ubuntu-with-secure-boot.md]
+> **Note** If you're running Ubuntu on a machine with Secure Boot enabled, the easier way is to use another machine. If you choose to continue with this, follow the steps in [./virtualbox-on-ubuntu-with-secure-boot.md](./virtualbox-on-ubuntu-with-secure-boot.md).
 
 ### Verify VirtualBox Installation
 Verify that VirtualBox is correctly installed by running the following in your Terminal/PowerShell:
@@ -50,7 +50,7 @@ Your output should look something like:
 ## Node.js
 Node.js is the language runtime we'll be using to demonstrate an application that works well with container technologies.
 
-For all operating systems, use this link and select your platform: https://nodejs.org/en/download/.
+For all operating systems, use this link and select your platform: [https://nodejs.org/en/download/](https://nodejs.org/en/download/).
 
 ### Verifying Node.js Installation
 Verify Docker is installed correctly by running the following in your Terminal/PowerShell:
@@ -70,11 +70,11 @@ Docker is the containerisation tool we'll be using.
 
 | Operating System | Link | Other Notes |
 | --- | --- | --- |
-| Ubuntu | https://store.docker.com/editions/community/docker-ce-server-ubuntu | Follow the instructions below on 1. enabling Docker to be run without root 2. installing `docker-compose` |
-| Fedora | https://store.docker.com/editions/community/docker-ce-server-fedora | Follow the instructions below on 1. enabling Docker to be run without root 2. installing `docker-compose` |
-| Windows | https://store.docker.com/editions/community/docker-ce-desktop-windows | If your system is older than Windows 8, you may need to install it from the link in the row directly below this |
-| Windows (older) | https://docs.docker.com/toolbox/toolbox_install_windows/ | Install via this link ONLY IF your system does not support the above link |
-| MacOS | https://store.docker.com/editions/community/docker-ce-desktop-mac | You lucky child |
+| Ubuntu | [https://store.docker.com/editions/community/docker-ce-server-ubuntu](https://store.docker.com/editions/community/docker-ce-server-ubuntu) | Follow the instructions below on 1. enabling Docker to be run without root 2. installing `docker-compose` |
+| Fedora | [https://store.docker.com/editions/community/docker-ce-server-fedora](https://store.docker.com/editions/community/docker-ce-server-fedora) | Follow the instructions below on 1. enabling Docker to be run without root 2. installing `docker-compose` |
+| Windows | [https://store.docker.com/editions/community/docker-ce-desktop-windows](https://store.docker.com/editions/community/docker-ce-desktop-windows) | If your system is older than Windows 8, you may need to install it from the link in the row directly below this |
+| Windows (older) | [https://docs.docker.com/toolbox/toolbox_install_windows/](https://docs.docker.com/toolbox/toolbox_install_windows/) | Install via this link ONLY IF your system does not support the above link |
+| MacOS | [https://store.docker.com/editions/community/docker-ce-desktop-mac](https://store.docker.com/editions/community/docker-ce-desktop-mac) | You lucky child |
 
 ### [Linux-Only] Running Docker without `root`
 > This is a convenience solution that exposes certain vulnerabilities in Docker. Since for Linux environments we're actually sharing our machine's kernel with Docker, you may want to disable this at the end of the workshop. You have been warned!
@@ -87,8 +87,6 @@ sudo usermod -aG docker $USER;
 ```
 
 Log out of your system and log back in for changes to take effect.
-
-Source: https://docs.docker.com/install/linux/linux-postinstall/
 
 ### [Linux-Only] Installing Docker Compose
 Install `pip` first (the alternative is to download the Docker Compose binary which is as convenient to update):
@@ -125,7 +123,7 @@ Docker version 18.03.1-ce, build 9ee9f40
 ## kubectl
 Kubectl is the command line tool we'll be using to communicate with our k8s master instance.
 
-For all operating systems, follow the instructions at this link to install `kubectl`: https://kubernetes.io/docs/tasks/tools/install-kubectl/.
+For all operating systems, follow the instructions at this link to install `kubectl`: [https://kubernetes.io/docs/tasks/tools/install-kubectl/](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 
 ## Verify `kubectl` Installation
 Verify `kubectl` is correctly set up by running the following in your Terminal/Powershell:
@@ -143,7 +141,7 @@ Client Version: version.Info{Major:"1", Minor:"11", GitVersion:"v1.11.1", GitCom
 ## MiniKube
 Minikube is a k8s deployment that works on a single virtual machine (node).
 
-For all operating systems, follow the instructions at this link: https://github.com/kubernetes/minikube/releases.
+For all operating systems, follow the instructions at this link: [https://github.com/kubernetes/minikube/releases](https://github.com/kubernetes/minikube/releases).
 
 ### [Mac/Linux-Only] Solving inability to create host-only adapter
 If you encounter the following error:
