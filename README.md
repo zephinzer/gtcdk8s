@@ -32,17 +32,19 @@ Sounds like you could do with some container technology! Enter the world of cont
 | Automating & optimising container building | Learn how Docker and Kubernetes are used together in a continuous integration/delivery (CI/CD) pipeline to deliver working software | Docker, Shell Scripting |
 
 ## Target Audience
-This is a hands-on workshop with the most utility for software engineers looking into the art of DevOps.
+This is a hands-on workshop with the most utility for software engineers looking into the art of DevOps or seeking to learn how container technologies can result in developer happiness.
 
 ## Should Haves
 ### Skills
-Participants should:
+Workshop participants should:
 1. Be comfortable working with the command line
 2. Have experience with software engineering
 3. Have some experience with deployment and operations
 
 ### Machine
-It is very highly recommended that you are on MacOS ([get a Mac](https://sg.carousell.com/search/products/?query=macbook%20pro%202015)). All commands have been tested to work for UNIX-based environments, but there are more issues you'll need to fix if you're using a Linux box. Use Windows at your own discretion - using a virtual machine is not encouraged since we will be running a virtual machine as part of this workshop.
+It is very highly recommended that you are on MacOS ([get a Mac on Carousell](https://sg.carousell.com/search/products/?query=macbook%20pro%202015)). All commands have been tested to work for UNIX-based environments, but there are some issues you'll need to fix if you're using a Linux box and you need to be very comfortable with system internals for it to work out.
+
+> Use Windows at your own discretion - using a virtual machine is not encouraged since we will be running a virtual machine as part of this workshop.
 
 ### Software
 It is highly recommended that the command `minikube start` works on your machine before the workshop as this workshop will be conducted in a constrained period of time.
