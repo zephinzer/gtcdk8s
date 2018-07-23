@@ -1,0 +1,4 @@
+elasticsearch.url: "http://logs_db:9200"
+kibana.index: ".kibana"
+server.host: 0.0.0.0
+server.port: 5601

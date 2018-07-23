@@ -1,0 +1,28 @@
+{
+  "name": "example-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@mcf/logger": "0.0.1",
+    "@mcf/provision-process": "^0.1.4",
+    "@mcf/server-boilerplate-middleware": "^0.6.3",
+    "fluent-logger": "^2.8.0",
+    "node-fetch": "^2.1.2",
+    "superagent": "^3.8.3",
+    "zipkin": "^0.14.0",
+    "zipkin-context-cls": "^0.13.0",
+    "zipkin-instrumentation-express": "^0.14.0",
+    "zipkin-instrumentation-fetch": "^0.14.0",
+    "zipkin-transport-http": "^0.14.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}

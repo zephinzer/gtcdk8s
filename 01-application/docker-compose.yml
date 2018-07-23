@@ -1,0 +1,128 @@
+version: "3"
+services:
+  application_1:
+    build:
+      context: ./example-app
+      dockerfile: ./Dockerfile
+    environment:
+      - INSTANCE_ID=application_1
+      - PORT=40001
+      - NEXT_SERVER_1_ID=application_2
+      - NEXT_SERVER_2_ID=application_3
+      - NEXT_SERVER_1=http://application_2:40002
+      - NEXT_SERVER_2=http://application_3:40003
+      - ZIPKIN_URL=http://tracing:9411
+      - FLUENT_URL=http://collator:24224
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - '-f'
+        - 'localhost:40001'
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - "./example-app:/app:Z"
+    ports:
+      - "40001:40001"
+  application_2:
+    build:
+      context: ./example-app
+      dockerfile: ./Dockerfile
+    environment:
+      - INSTANCE_ID=application_2
+      - PORT=40002
+      - NEXT_SERVER_1_ID=application_1
+      - NEXT_SERVER_2_ID=application_3
+      - NEXT_SERVER_1=http://application_1:40001
+      - NEXT_SERVER_2=http://application_3:40003
+      - ZIPKIN_URL=http://tracing:9411
+      - FLUENT_URL=http://collator:24224
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - '-f'
+        - 'localhost:40002'
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - "./example-app:/app:Z"
+    ports:
+      - "40002:40002"
+  application_3:
+    build:
+      context: ./example-app
+      dockerfile: ./Dockerfile
+    environment:
+      - INSTANCE_ID=application_3
+      - PORT=40003
+      - NEXT_SERVER_1_ID=application_2
+      - NEXT_SERVER_2_ID=application_1
+      - NEXT_SERVER_1=http://application_2:40002
+      - NEXT_SERVER_2=http://application_1:40001
+      - ZIPKIN_URL=http://tracing:9411
+      - FLUENT_URL=http://collator:24224
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - '-f'
+        - 'localhost:40003'
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - "./example-app:/app:Z"
+    ports:
+      - "40003:40003"
+  metrics:
+    logging:
+      driver: none
+    image: prom/prometheus:v2.3.2
+    ports:
+      - "49090:9090"
+    volumes:
+      - "./data/prometheus:/prometheus"
+      - "./data/prometheus-etc/prometheus.yml:/etc/prometheus/prometheus.yml"
+  tracing:
+    logging:
+      driver: none
+    image: openzipkin/zipkin:2.10.2
+    ports:
+      - "49411:9411"
+  collator:
+    build:
+      context: ./data/fluentd.d
+      dockerfile: ./Dockerfile
+    entrypoint: ["fluentd", "-c", "/etc/fluent/fluent.conf"]
+    ports:
+      - "44231:24231"
+      - "44224:24224"
+      - "44224:24224/udp"
+    volumes:
+      - "./data/fluentd.d/fluent.conf:/etc/fluent/fluent.conf"
+  logs_db:
+    logging:
+      driver: none
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.1
+    volumes:
+      - "./data/elasticsearch:/usr/share/elasticsearch/data"
+    environment:
+      - "discovery.type=single-node"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "49200:9200"
+      - "49300:9300"
+  logs_view:
+    logging:
+      driver: none
+    image: docker.elastic.co/kibana/kibana:6.3.1
+    ports:
+      - "45601:5601"
+    volumes:
+      - "./data/kibana.d/kibana.yml:/usr/share/kibana/config/kibana.yml"
+    depends_on:
+      - "logs_db"
