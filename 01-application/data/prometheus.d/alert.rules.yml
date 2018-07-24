@@ -1,0 +1,19 @@
+groups:
+- name: "service monitoring"
+  rules:
+  - alert: service_down
+    expr: up == 0
+    for: 1s
+    labels:
+      severity: page
+    annotations:
+      summary: "Instance {{ $labels.instance }} down"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} is down."
+  - alert: application_errors_happened
+    expr: sum(http_request_duration_seconds_count{job=~"^Application.*$",status_code=~"^5..$"}) > 0
+    for: 1s
+    labels:
+      severity: page
+    annotations:
+      summary: "Errors have appeared in the application."
+      description: "HTTP 500 errors have appeared!"

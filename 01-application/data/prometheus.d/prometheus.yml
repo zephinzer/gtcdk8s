@@ -1,0 +1,50 @@
+global:
+  scrape_interval: 3s
+  scrape_timeout: 3s
+  evaluation_interval: 5s
+rule_files:
+  - 'alert.rules.yml'
+alerting:
+  alertmanagers:
+  - scheme: http
+    static_configs:
+    - targets:
+      - "alerts:9093"
+scrape_configs:
+- job_name: Application 1
+  static_configs:
+  - targets:
+    - application_1:40001
+- job_name: Application 2
+  static_configs:
+  - targets:
+    - application_2:40002
+- job_name: Application 3
+  static_configs:
+  - targets:
+    - application_3:40003
+- job_name: Prometheus Metrics Collector
+  static_configs:
+  - targets:
+    - metrics:9090
+- job_name: Prometheus Alerts Manager
+  static_configs:
+  - targets:
+    - alerts:9093
+- job_name: Grafana Dashboard
+  static_configs:
+  - targets:
+    - dashboard:3000
+- job_name: Distributed Tracing
+  metrics_path: /prometheus
+  static_configs:
+  - targets:
+    - tracing:9411
+- job_name: Logs Collator
+  static_configs:
+  - targets:
+    - collator:24231
+- job_name: Logs Database
+  static_configs:
+  - targets:
+    - logs_db_exporter:9108

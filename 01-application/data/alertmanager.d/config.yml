@@ -1,0 +1,9 @@
+global:
+  resolve_timeout: 1m
+route:
+  receiver: "notifier"
+receivers:
+- name: "notifier"
+  webhook_configs:
+  - url: "http://notifier:59093"
+    send_resolved: true

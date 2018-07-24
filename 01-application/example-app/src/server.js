@@ -1,4 +1,3 @@
-const superagent = require('superagent');
 const boilerplate = require('@mcf/server-boilerplate-middleware');
 const tracer = require('./tracer');
 const request = require('./request');
@@ -27,11 +26,10 @@ function server({
   });
 
   _server.use(tracer.getMiddleware());
-  _server.use((request, response, next) => {
-    logger.info(request.headers);
-    next();
-  });
 
+  /**
+   * Retrieves the response from the next server #1
+   */
   _server.get('/next-server-1', (_request, response) => {
     request(proxyIdOne, proxyUrlOne)
       .then((res) => res.text())
@@ -40,6 +38,9 @@ function server({
       });
   });
 
+  /**
+   * Retrieves the response from the next server #2
+   */
   _server.get('/next-server-2', (_request, response) => {
     request(proxyIdTwo, proxyUrlTwo)
       .then((res) => res.text())
@@ -48,6 +49,9 @@ function server({
       });
   });
 
+  /**
+   * Use this to demonstrate what a multi-application call looks like in series
+   */
   _server.get('/next-servers-simple-sequential', (_request, response) => {
     request(proxyIdOne, proxyUrlOne)
       .then(() => request(proxyIdTwo, proxyUrlTwo))
@@ -56,6 +60,9 @@ function server({
       });
   });
 
+  /**
+   * Use this to demonstrate what a multi-application call looks like in parallel
+   */
   _server.get('/next-servers-simple-parallel', (_request, response) => {
     Promise.all([
       request(proxyIdOne, proxyUrlOne),
@@ -65,6 +72,9 @@ function server({
     });
   });
 
+  /**
+   * Use this to simulate a series of API calls to the various application instances
+   */
   _server.get('/next-servers-complex-sequential', (_request, response) => {
     request(proxyIdOne, proxyUrlOne)
       .then(() => request(proxyIdOne, `${proxyUrlOne}/next-server-1`))
@@ -77,6 +87,9 @@ function server({
       });
   });
 
+  /**
+   * Use this to simulate a complex network of API calls amongst application instances
+   */
   _server.get('/next-servers-complex-parallel', (_request, response) => {
     Promise.all([
       request(proxyIdOne, proxyUrlOne),
@@ -90,16 +103,32 @@ function server({
     });
   });
 
+  /**
+   * Use this to simulate an error which will hit the all-encompassing error-handler
+   */
+  _server.get('/error', (_request, _response, next) => {
+    logger.error('Something disastrous happens here');
+    next(new Error('Something disastrous happened'));
+  });
+
+  /**
+   * Base replies
+   */
   _server.get('/', (request, response) => {
     logger.info(`Hello from ${instanceId}`);
     response.json(`Hello from ${instanceId}`);
   });
 
+  /**
+   * The all-encompassing error handler
+   */
   _server.use((err, _request, response, _next) => {
-    response.json({
-      message: err.message,
-      stack: err.stack.split('\n'),
-    });
+    response
+      .status(500)
+      .json({
+        message: err.message,
+        stack: err.stack.split('\n'),
+      });
   });
 
   return _server;

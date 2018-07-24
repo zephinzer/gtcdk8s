@@ -15,7 +15,6 @@
     "@mcf/server-boilerplate-middleware": "^0.6.3",
     "fluent-logger": "^2.8.0",
     "node-fetch": "^2.1.2",
-    "superagent": "^3.8.3",
     "zipkin": "^0.14.0",
     "zipkin-context-cls": "^0.13.0",
     "zipkin-instrumentation-express": "^0.14.0",

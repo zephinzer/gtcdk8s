@@ -39,21 +39,73 @@ Run the following commands to spin up our model application together with suppor
   | Application_2 | [http://localhost:40002](http://localhost:40002) | Example application |
   | Application_3 | [http://localhost:40003](http://localhost:40003) | Example application |
   | Prometheus | [http://localhost:49090](http://localhost:49090) | Prometheus metrics monitor |
+  | Grafana | [http://localhost:43000](http://localhost:43000) | Dashboard |
   | Zipkin | [http://localhost:49411](http://localhost:49411) | Distributed tracing application |
   | Kibana | [http://localhost:45601](http://localhost:45601) | Logs explorer |
   | FluentD | [http://localhost:44224](http://localhost:44224) | Logs collator |
   | ElasticSearch | [http://localhost:49200](http://localhost:49200) | Collaged logs storage |
 
-## Liveness Checks
+### Introduction to the Application
+The application was designed to demonstrate two situations:
 
-## Readiness Checks
+1. A microservices architecture where each `application` (as defined by us) is a service
+2. A highly-available application where each `application` is a replicate
 
-## Application Metrics
+The application exposes the following endpoints:
 
-## Centralised Logging
+| Method | Path | Description |
+| GET | `/next-server-1` | Simulates a service calling another - get response from the next server as defined by `NEXT_SERVER_1` |
+| GET | `/next-server-2` | Simulates a service calling another - get response from the next server as defined by `NEXT_SERVER_2` |
+| GET | `/next-servers-simple-sequential` | Simulates a service retrieving data from two other services in parallel - this happens when the data response of the first service decides the request to the second service (eg. relational data) |
+| GET | `/next-servers-simple-parallel` | Simulates a service retrieving data from two other services in parallel - this happens when we need to retrieve various parts of a profile (eg. profile picture from an images hosting service, and email from an accounts service) |
+| GET | `/next-servers-complex-sequential` | Simulates a cascade of network calls for no reason at all - simulates a microservices architecture |
+| GET | `/next-servers-complex-parallel` | Simulates a cascade of network calls to various services - simulates a highly available application where calls can be routed to any one of its live instances |
+| GET | `/error` | Simulates an error - we use this to demonstrate tracing through a crazy set of logs |
+| GET | `/` | The happy path (: smile. |
 
-## Distributed Tracing
+## Cloud Native Applications
 
+### Liveness Checks
+Liveness checks tell an orchestrator if the application instance is alive and if it is not, the orchestrator should restart it.
+
+Access this at the `/healthz` endpoint.
+
+> In production setups, you should either obscure the endpoint by changing the endpoint path, or protect it using a token/certificate-based authentication.
+
+### Readiness Checks
+Readiness checks tell an orchestrator if the application instance is ready to receive requests and if it is not, the orchestrator should not route traffic to it but keep it alive till is is ready.
+
+Access this at the `/readyz` endpoint.
+
+> In production setups, you should either obscure the endpoint by changing the endpoint path, or protect it using a token/certificate-based authentication.
+
+### Application Metrics
+Metrics provide us insights into how an application instance (or cluster) is performing.
+
+Access this at the `/metrics` endpoint.
+
+> In production setups, you should either obscure the endpoint by changing the endpoint path, or protect it using a token/certificate-based authentication.
+
+Access [Prometheus at http://localhost:49090](http://localhost:49090) to check out the available metrics of our applications.
+
+Access [Grafana at http://localhost:43000](http://localhost:43000) to check out visualisations of the application metrics. Username is `user` and password is `password` if you haven't changed the `grafana.ini` file.
+
+### Centralised Logging
+Centralised logging helps us to see a time-based series of logs instead of having to manually check each instance. In horizontally scalable setups, this becomes an issue really quick when you have 50 low-powered application instances.
+
+Access [Kibana at http://localhost:45601](http://localhost:45601) to check out the centralised logs in time-series.
+
+### Distributed Tracing
+Distributed tracing helps us to see where a request went and to provide each request with a context that can be used to string together a single request that went through multiple services.
+
+Access [Zipkin at http://localhost:49411](http://localhost:49411) to check out the trace visualisations.
+
+Access [Kibana at http://localhost:45601](http://localhost:45601) to check out the trace contexts in the logs.
+
+## Activity: Trace the Error
+
+`WIP: TODO`
 
 # References & Further Reading
 1. [The Twelve-Factor App](https://12factor.net/)
+2. [Pattern: Microservice chassis](http://microservices.io/patterns/microservice-chassis.html)

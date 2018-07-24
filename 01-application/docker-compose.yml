@@ -1,6 +1,8 @@
-version: "3"
+version: "3.5"
 services:
   application_1:
+    logging:
+      driver: none
     build:
       context: ./example-app
       dockerfile: ./Dockerfile
@@ -14,19 +16,18 @@ services:
       - ZIPKIN_URL=http://tracing:9411
       - FLUENT_URL=http://collator:24224
     healthcheck:
-      test:
-        - CMD
-        - curl
-        - '-f'
-        - 'localhost:40001'
+      test: [ "CMD-SHELL", "curl", "-f", "http://localhost:40001/healthz" ]
       interval: 5s
       timeout: 5s
       retries: 5
+      start_period: 10s
     volumes:
       - "./example-app:/app:Z"
     ports:
       - "40001:40001"
   application_2:
+    logging:
+      driver: none
     build:
       context: ./example-app
       dockerfile: ./Dockerfile
@@ -40,19 +41,18 @@ services:
       - ZIPKIN_URL=http://tracing:9411
       - FLUENT_URL=http://collator:24224
     healthcheck:
-      test:
-        - CMD
-        - curl
-        - '-f'
-        - 'localhost:40002'
+      test: [ "CMD-SHELL", "curl", "-f", "http://localhost:40002/healthz" ]
       interval: 5s
       timeout: 5s
       retries: 5
+      start_period: 10s
     volumes:
       - "./example-app:/app:Z"
     ports:
       - "40002:40002"
   application_3:
+    logging:
+      driver: none
     build:
       context: ./example-app
       dockerfile: ./Dockerfile
@@ -66,33 +66,29 @@ services:
       - ZIPKIN_URL=http://tracing:9411
       - FLUENT_URL=http://collator:24224
     healthcheck:
-      test:
-        - CMD
-        - curl
-        - '-f'
-        - 'localhost:40003'
+      test: [ "CMD-SHELL", "curl", "-f", "http://localhost:40003/healthz" ]
       interval: 5s
       timeout: 5s
       retries: 5
+      start_period: 10s
     volumes:
       - "./example-app:/app:Z"
     ports:
       - "40003:40003"
-  metrics:
+  alerts:
     logging:
       driver: none
-    image: prom/prometheus:v2.3.2
+    image: prom/alertmanager:v0.15.1
+    entrypoint: [
+      "alertmanager",
+      "--config.file=/etc/alertmanager/config.yml",
+      "--storage.path=/alertmanager"
+    ]
     ports:
-      - "49090:9090"
+      - "49093:9093"
     volumes:
-      - "./data/prometheus:/prometheus"
-      - "./data/prometheus-etc/prometheus.yml:/etc/prometheus/prometheus.yml"
-  tracing:
-    logging:
-      driver: none
-    image: openzipkin/zipkin:2.10.2
-    ports:
-      - "49411:9411"
+      - "./data/alertmanager:/alertmanager:Z"
+      - "./data/alertmanager.d/config.yml:/etc/alertmanager/config.yml:Z"
   collator:
     build:
       context: ./data/fluentd.d
@@ -104,6 +100,17 @@ services:
       - "44224:24224/udp"
     volumes:
       - "./data/fluentd.d/fluent.conf:/etc/fluent/fluent.conf"
+  dashboard:
+    logging:
+      driver: none
+    image: grafana/grafana:5.2.1
+    ports:
+      - "43000:3000"
+    user: "1000"
+    volumes:
+      - "./data/grafana:/var/lib/grafana"
+      - "./data/grafana.d/conf/grafana.ini:/etc/grafana/grafana.ini"
+      - "./data/grafana.d/provisioning:/etc/grafana/provisioning"
   logs_db:
     logging:
       driver: none
@@ -116,6 +123,15 @@ services:
     ports:
       - "49200:9200"
       - "49300:9300"
+  logs_db_exporter:
+    logging:
+      driver: none
+    image: justwatch/elasticsearch_exporter:1.0.2
+    command:
+     - '-es.uri=http://logs_db:9200'
+    restart: always
+    ports:
+    - "49108:9108"
   logs_view:
     logging:
       driver: none
@@ -126,3 +142,28 @@ services:
       - "./data/kibana.d/kibana.yml:/usr/share/kibana/config/kibana.yml"
     depends_on:
       - "logs_db"
+  metrics:
+    logging:
+      driver: none
+    image: prom/prometheus:v2.3.2
+    ports:
+      - "49090:9090"
+    volumes:
+      - "./data/prometheus:/prometheus:Z"
+      - "./data/prometheus.d/prometheus.yml:/etc/prometheus/prometheus.yml:Z"
+      - "./data/prometheus.d/alert.rules.yml:/etc/prometheus/alert.rules.yml:Z"
+  notifier:
+    build:
+      context: ./notifier
+      dockerfile: ./Dockerfile
+    entrypoint: [ "npm", "start" ]
+    ports:
+      - "59093:59093"
+    volumes:
+      - "./notifier:/app"
+  tracing:
+    logging:
+      driver: none
+    image: openzipkin/zipkin:2.10.2
+    ports:
+      - "49411:9411"

@@ -27,6 +27,7 @@ const logger = createLogger({
       info.message.parentId = tracer.getTracer().id.parentId;
       info.message.traceId = tracer.getTracer().id.traceId;
       info.message.sampled = tracer.getTracer().id.sampled;
+      info.message.level = info.level;
       return info;
     })(),
     format.timestamp(),
