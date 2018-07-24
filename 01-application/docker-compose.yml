@@ -21,8 +21,9 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
-    volumes:
-      - "./example-app:/app:Z"
+    ## for debugging/development:
+    # volumes:
+    #   - "./example-app:/app:Z"
     ports:
       - "40001:40001"
   application_2:
@@ -46,8 +47,9 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
-    volumes:
-      - "./example-app:/app:Z"
+    ## for debugging/development:
+    # volumes:
+    #   - "./example-app:/app:Z"
     ports:
       - "40002:40002"
   application_3:
@@ -71,8 +73,9 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
-    volumes:
-      - "./example-app:/app:Z"
+    ## for debugging/development:
+    # volumes:
+    #   - "./example-app:/app:Z"
     ports:
       - "40003:40003"
   alerts:

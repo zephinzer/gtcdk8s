@@ -9,6 +9,15 @@ All container-ready applications should minimally contain the following code ins
 4. [Centralised logging](#centralised-logging)
 5. [Distributed tracing](#distributed-tracing)
 
+## Section Objectives
+
+1. Understand code instrumentations in a cloud native application
+2. Have a big-picture view of what else is around a container
+3. Understand what health checks mean
+4. Understand why centralised logs are important
+5. Understand why distributed tracing is important
+6. Be able to discover an errored-out request using alerts, metrics, trace IDs and logs.
+
 ## Pre-Requisites
 - Docker
 - Docker Compose
