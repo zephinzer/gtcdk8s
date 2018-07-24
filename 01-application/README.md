@@ -54,6 +54,7 @@ The application was designed to demonstrate two situations:
 The application exposes the following endpoints:
 
 | Method | Path | Description |
+| --- | --- | --- |
 | GET | `/next-server-1` | Simulates a service calling another - get response from the next server as defined by `NEXT_SERVER_1` |
 | GET | `/next-server-2` | Simulates a service calling another - get response from the next server as defined by `NEXT_SERVER_2` |
 | GET | `/next-servers-simple-sequential` | Simulates a service retrieving data from two other services in parallel - this happens when the data response of the first service decides the request to the second service (eg. relational data) |
@@ -101,6 +102,15 @@ Distributed tracing helps us to see where a request went and to provide each req
 Access [Zipkin at http://localhost:49411](http://localhost:49411) to check out the trace visualisations.
 
 Access [Kibana at http://localhost:45601](http://localhost:45601) to check out the trace contexts in the logs.
+
+### Alerting
+Alerting helps us to get notified of events and respond to them. Only when alerts are present and we can respond to them can we begin to automate them.
+
+> This section requires you to have a Telegram account. If you don't, it will be demonstrated so no FOMO!
+
+Talk to [The Bot Father](https://telegram.me/BotFather) and create a new bot. You should receive a token.
+
+Create a file at `./`
 
 ## Activity: Trace the Error
 
