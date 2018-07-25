@@ -103,6 +103,49 @@ function server({
     });
   });
 
+  _server.get('/complex-error/:iteration', (req, response, next) => {
+    const {iteration} = req.params;
+    const nextNumber = (typeof iteration !== 'number') ? 5 : iteration - 1;
+    const proxies = [
+      {id: proxyIdOne, url: `${proxyUrlOne}`},
+      {id: proxyIdOne, url: `${proxyUrlOne}/next-server-1`},
+      {id: proxyIdOne, url: `${proxyUrlOne}/next-server-2`},
+      {id: proxyIdOne, url: `${proxyUrlOne}/next-servers-complex-sequential`},
+      {id: proxyIdOne, url: `${proxyUrlOne}/next-servers-complex-sequential`},
+      {id: proxyIdOne, url: `${proxyUrlOne}/complex-error/${nextNumber}`},
+      {id: proxyIdTwo, url: `${proxyUrlTwo}/complex-error/${nextNumber}`},
+      {id: proxyIdTwo, url: `${proxyUrlTwo}`},
+      {id: proxyIdTwo, url: `${proxyUrlTwo}`},
+      {id: proxyIdTwo, url: `${proxyUrlTwo}/next-server-1`},
+      {id: proxyIdTwo, url: `${proxyUrlTwo}/next-server-2`},
+      {id: proxyIdTwo, url: `${proxyUrlTwo}/next-servers-complex-sequential`},
+      {id: proxyIdTwo, url: `${proxyUrlTwo}/next-servers-simple-parallel`},
+      {id: proxyIdTwo, url: `${proxyUrlTwo}/error`}
+    ];
+    if (nextNumber > 0) {
+      Promise.all((() => {
+        let connections = [];
+        // we iterate to the number of proxies so that statistically we should get an error
+        for (let i = 0; i < proxies.length; ++i) {
+          const proxySelection = proxies[Math.floor(Math.random() * proxies.length)];
+          connections.push(
+            request(proxySelection.id, proxySelection.url).then((res) => res.json())
+          );
+        }
+        return connections;
+      })()).then((results) => {
+        console.info(results);
+        response.json({
+          results
+        });
+      }).catch((err) => {
+        response.json(err);
+      });
+    } else {
+      response.json('you got lucky');
+    }
+  });
+
   /**
    * Use this to simulate an error which will hit the all-encompassing error-handler
    */

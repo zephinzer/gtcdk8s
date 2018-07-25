@@ -8,6 +8,7 @@ The required software are as follows:
 3. [Docker (with Compose)](#docker-with-compose)
 4. [kubectl](#kubectl)
 5. [MiniKube](#minikube)
+6. [Other bootstrapping](#other-bootstrapping)
 
 ## Topic End-Goal
 At the end of this section, you should be able to run `minikube start` and have the following output:
@@ -185,3 +186,6 @@ Your output should look like:
 minikube version: v0.28.0
 ```
 
+## Other Bootstrapping
+1. Navigate to `./01-application/example-app` and run `npm install`
+2. Navigate to `./01-application/notifier` and run `npm install`

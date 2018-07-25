@@ -71,6 +71,7 @@ The application exposes the following endpoints:
 | GET | `/next-servers-complex-sequential` | Simulates a cascade of network calls for no reason at all - simulates a microservices architecture |
 | GET | `/next-servers-complex-parallel` | Simulates a cascade of network calls to various services - simulates a highly available application where calls can be routed to any one of its live instances |
 | GET | `/error` | Simulates an error - we use this to demonstrate tracing through a crazy set of logs |
+| GET | `/complex-error/:iteration` | Simulates a complex error - we use this to simulate a live environment of logs |
 | GET | `/` | The happy path (: smile. |
 
 ## Cloud Native Applications

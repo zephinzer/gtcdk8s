@@ -1,8 +1,6 @@
 version: "3.5"
 services:
   application_1:
-    logging:
-      driver: none
     build:
       context: ./example-app
       dockerfile: ./Dockerfile
@@ -22,13 +20,11 @@ services:
       retries: 5
       start_period: 10s
     ## for debugging/development:
-    # volumes:
-    #   - "./example-app:/app:Z"
+    volumes:
+      - "./example-app:/app:Z"
     ports:
       - "40001:40001"
   application_2:
-    logging:
-      driver: none
     build:
       context: ./example-app
       dockerfile: ./Dockerfile
@@ -48,13 +44,11 @@ services:
       retries: 5
       start_period: 10s
     ## for debugging/development:
-    # volumes:
-    #   - "./example-app:/app:Z"
+    volumes:
+      - "./example-app:/app:Z"
     ports:
       - "40002:40002"
   application_3:
-    logging:
-      driver: none
     build:
       context: ./example-app
       dockerfile: ./Dockerfile
@@ -74,8 +68,8 @@ services:
       retries: 5
       start_period: 10s
     ## for debugging/development:
-    # volumes:
-    #   - "./example-app:/app:Z"
+    volumes:
+      - "./example-app:/app:Z"
     ports:
       - "40003:40003"
   alerts:
@@ -93,6 +87,8 @@ services:
       - "./data/alertmanager:/alertmanager:Z"
       - "./data/alertmanager.d/config.yml:/etc/alertmanager/config.yml:Z"
   collator:
+    logging:
+      driver: none
     build:
       context: ./data/fluentd.d
       dockerfile: ./Dockerfile
