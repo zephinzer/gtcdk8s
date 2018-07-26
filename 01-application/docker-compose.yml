@@ -152,6 +152,8 @@ services:
       - "./data/prometheus.d/prometheus.yml:/etc/prometheus/prometheus.yml:Z"
       - "./data/prometheus.d/alert.rules.yml:/etc/prometheus/alert.rules.yml:Z"
   notifier:
+    logger:
+      driver: none
     build:
       context: ./notifier
       dockerfile: ./Dockerfile
@@ -164,5 +166,8 @@ services:
     logging:
       driver: none
     image: openzipkin/zipkin:2.10.2
+    environment:
+      - STORAGE_TYPE=elasticsearch
+      - ES_HOSTS=logs_db
     ports:
       - "49411:9411"

@@ -124,7 +124,13 @@ Create a file at `./`
 
 ## Activity: Trace the Error
 
-`WIP: TODO`
+1. Confirm that everything is up by running: `./_scripts/status.sh`
+  a. If it is not, run `docker-compose down`, wait till it completes
+  b. Run the cleanup script: `./_scripts/cleanup.sh`
+  b. Then run `docker-compose up` again
+2. 
+
+
 
 # References & Further Reading
 1. [The Twelve-Factor App](https://12factor.net/)

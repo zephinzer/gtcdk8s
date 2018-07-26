@@ -3,7 +3,7 @@ groups:
   rules:
   - alert: service_down
     expr: up == 0
-    for: 1s
+    for: 20s
     labels:
       severity: page
     annotations:
