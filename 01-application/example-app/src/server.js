@@ -154,6 +154,12 @@ function server({
     next(new Error('Something disastrous happened'));
   });
 
+  _server.get('/healthz', (_request, response) => {
+    response
+      .status(200)
+      .json('ok');
+  });
+
   /**
    * Base replies
    */

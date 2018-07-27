@@ -32,7 +32,16 @@ Run the following to enter this directory:
   cd ./01-application;
   ```
 
-### 2. Spin up the Docker Compose network
+### 2. Set the permissions on volumes correctly
+> This step is required only for Linux boxes
+
+We utilise some directories as volumes, and we need to give Docker write permissions to these directories. Run:
+
+  ```bash
+  chmod 777 -R ./data
+  ```
+
+### 3. Spin up the Docker Compose network
 Run the following commands to spin up our model application together with support services:
 
   ```bash
@@ -40,7 +49,7 @@ Run the following commands to spin up our model application together with suppor
   docker-compose up -d;
   ```
 
-### 3. The following front-end services should now be available on your local machine:
+### 4. The following front-end services should now be available on your local machine:
 
   | Service | URL | Description |
   | --- | --- | --- |
