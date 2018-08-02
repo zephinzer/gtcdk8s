@@ -14,7 +14,7 @@ Sounds like you could do with some container technology! Enter the world of cont
 - VirtualBox
 
 ## Topics
-1. [A containerisable application](./01-application/README.md)
+1. [The cloud native application](./01-application/README.md)
 2. [Containerising an application](./02-containerising/README.md)
 3. [Provisioning an environment](./03-provisioning/README.md)
 4. [Deploying an application](./04-deploying/README.md)

@@ -1,4 +1,4 @@
-# Crafting a container-ready application
+# The Cloud Native Application
 A container-ready application is also known as being cloud native and should abide by the guidelines in the [The Twelve-Factor App](https://12factor.net/).
 
 All container-ready applications should minimally contain the following code instrumentations:
