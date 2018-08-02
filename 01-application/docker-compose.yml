@@ -152,7 +152,7 @@ services:
       - "./data/prometheus.d/prometheus.yml:/etc/prometheus/prometheus.yml:Z"
       - "./data/prometheus.d/alert.rules.yml:/etc/prometheus/alert.rules.yml:Z"
   notifier:
-    logger:
+    logging:
       driver: none
     build:
       context: ./notifier
