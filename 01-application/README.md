@@ -22,7 +22,7 @@ All container-ready applications should minimally contain the following code ins
 - Docker
 - Docker Compose
 
-## Getting It Up
+## Getting Up The Example Application
 You should have this repository cloned locally before following the instructions below. Start the root of the courseware repository.
 
 ### 1. Change to this directory
@@ -129,7 +129,22 @@ Alerting helps us to get notified of events and respond to them. Only when alert
 
 Talk to [The Bot Father](https://telegram.me/BotFather) and create a new bot. You should receive a token.
 
-Create a file at `./`
+Create a `.env` file in the `./notifier` directory:
+
+```bash
+touch ./notifier/.env
+```
+
+Paste the following into the `.env` file:
+
+```
+TELEGRAM_BOT_TOKEN=XXXXXXXXX:ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789
+TELEGRAM_CHAT_ID=
+```
+
+Replace the `TELERAM_BOT_TOKEN` with the token you retrieved from [The Bot Father](https://telegram.me/BotFather).
+
+Initiate a chat to your bot with `/start` and it should respond with the chat ID. Paste the chat ID into the `TELEGRAM_CHAT_ID` field in the `.env` file.
 
 ## Activity: Trace the Error
 
@@ -137,9 +152,8 @@ Create a file at `./`
   a. If it is not, run `docker-compose down`, wait till it completes
   b. Run the cleanup script: `./_scripts/cleanup.sh`
   b. Then run `docker-compose up` again
-2. 
 
-
+> TODO
 
 # References & Further Reading
 1. [The Twelve-Factor App](https://12factor.net/)
