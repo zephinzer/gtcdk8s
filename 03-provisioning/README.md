@@ -1,4 +1,4 @@
-# Provisioning an environment
+# Provisioning a Development Environment
 
 ## Activity 1: Adding support services
 

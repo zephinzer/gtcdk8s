@@ -11,8 +11,10 @@ services:
       - NEXT_SERVER_2_ID=application_3
       - NEXT_SERVER_1=http://application_2:40002
       - NEXT_SERVER_2=http://application_3:40003
-      - ZIPKIN_URL=http://tracing:9411
-      - FLUENT_URL=http://collator:24224
+      - ZIPKIN_HOST=tracing
+      - ZIPKIN_PORT=9411
+      - FLUENTD_HOST=collator
+      - FLUENTD_PORT=24224
     healthcheck:
       test: [ "CMD-SHELL", "curl", "-f", "http://localhost:40001/healthz" ]
       interval: 5s
@@ -35,8 +37,10 @@ services:
       - NEXT_SERVER_2_ID=application_3
       - NEXT_SERVER_1=http://application_1:40001
       - NEXT_SERVER_2=http://application_3:40003
-      - ZIPKIN_URL=http://tracing:9411
-      - FLUENT_URL=http://collator:24224
+      - ZIPKIN_HOST=tracing
+      - ZIPKIN_PORT=9411
+      - FLUENTD_HOST=collator
+      - FLUENTD_PORT=24224
     healthcheck:
       test: [ "CMD-SHELL", "curl", "-f", "http://localhost:40002/healthz" ]
       interval: 5s
@@ -59,8 +63,10 @@ services:
       - NEXT_SERVER_2_ID=application_1
       - NEXT_SERVER_1=http://application_2:40002
       - NEXT_SERVER_2=http://application_1:40001
-      - ZIPKIN_URL=http://tracing:9411
-      - FLUENT_URL=http://collator:24224
+      - ZIPKIN_HOST=tracing
+      - ZIPKIN_PORT=9411
+      - FLUENTD_HOST=collator
+      - FLUENTD_PORT=24224
     healthcheck:
       test: [ "CMD-SHELL", "curl", "-f", "http://localhost:40003/healthz" ]
       interval: 5s
@@ -87,8 +93,6 @@ services:
       - "./data/alertmanager:/alertmanager:Z"
       - "./data/alertmanager.d/config.yml:/etc/alertmanager/config.yml:Z"
   collator:
-    logging:
-      driver: none
     build:
       context: ./data/fluentd.d
       dockerfile: ./Dockerfile
