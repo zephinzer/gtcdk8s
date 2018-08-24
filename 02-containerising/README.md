@@ -55,4 +55,4 @@ Here are some basic CLI commands to get started. We will cover their practical u
 [Click here for Activity #2](./ACTIVITY-02.md).
 
 # Next Steps
-Click here to move onto [Provisioning a Development Environment](../03-provisioning/README.md).
+Click here to move onto [Provisioning an Environment](../03-provisioning/README.md).

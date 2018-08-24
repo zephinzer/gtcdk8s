@@ -1,50 +1,44 @@
-# Provisioning a Development Environment
+# Provisioning an Environment
+Now that we've managed to [containerise an application](../02-containerising), the natural progression would be to see how we can deploy multiple of these.
 
-## Activity 1: Adding support services
+# Section Objectives
 
-### 1.1 Pull image
-Run the following to pull the official WordPress image
+1. Concepts in environment provisioning
+2. Introduction to the Docker Compose manifest
+3. Setting up a service
+4. Setting up a development environment
 
-```bash
-docker pull wordpress:latest;
-```
+# Why environment provisioning?
+## Support services
+Lets take the example of WordPress (which we will be deploying later), the world's most popular publishing platform.
 
-### 1.2 Run it
-Run the following to get up a WordPress installation:
+WordPress itself contains the core logic of how data should be manipulated and displayed. However, it relies on there being a MySQL database service which it can access to save/load data to/from.
 
-```bash
-docker run \
-  --publish 8081:80 \
-  wordpress:latest;
-```
+Provisioning an environment for a service means spinning up the supporting services required for a service to do its job.
 
-Now visit the site at [http://localhost:8081](http://localhost:8081).
+## An easier development environment
+When working on services with a service-oriented architecture (that includes microservices!), each service often depends on at least one other service.
 
-Is everything working?
+When a new developer is onboarded onto the team, they'd have to necessarily spin up multiple services, learning the build commands for each service. By the time they've gotten it up, it could be a few weeks later.
 
-### 1.3 Add Database
+Additionally, should we have to work on multiple projects, each with their own required database service instance, our solution has traditionally been to share a single local database instance but use different database schemas.
 
-```bash
-docker run \
-  -e MYSQL_ROOT_PASSWORD=password \
-  -e MYSQL_USER=user \
-  -e MYSQL_PASSWORD=password \
-  -e MYSQL_DATABASE=wordpress \
-  --publish 3307:3306 \
-  --name mysql \
-  -d mysql:5.7.20;
+While this is livable with, this isn't optimal because we're running two different services with the same architecture. When things go wrong, it's harder to isolate the error, and while it's possible, it's not trivial to have multiple instances of MySQL running locally.
 
-docker run \
-  -e WORDPRESS_DB_HOST=mysql \
-  -e WORDPRESS_DB_USER=user \
-  -e WORDPRESS_DB_PASSWORD=password \
-  -e WORDPRESS_DB_NAME=wordpress \
-  --publish 8080:80 \
-  --link mysql:mysql \
-  --name wordpress \
-  wordpress:latest;
-```
+This is where Docker Compose comes into the picture!
 
-Now visit the site at [http://localhost:8081](http://localhost:8081).
+## Docker Compose
+The Docker engine provides multiple CLI tools such as the primary `docker` command that allows us to build, run, execute into, and monitor our containers.
 
-## Activity 2: Using a Compose File
+When we need to run multiple of these containers within an isolated network, that's where `docker-compose` comes into the picture.
+
+Docker Compose creates an isolated network where the provisional contianers can reside and interact with each other without affecting the system.
+
+## Activity 1: A Local WordPress Deployment
+Click here to [start deploying a WordPress service locally](./ACTIVITY-01.md).
+
+## Activity 2: Setting up for WordPress Plugin Development
+Click here to [start provisioning an environment for developing plugins on WordPress](./ACTIVITY-02.md).
+
+# References
+- [Compose file version 3 reference](https://docs.docker.com/compose/compose-file/)

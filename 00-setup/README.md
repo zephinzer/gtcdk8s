@@ -4,11 +4,10 @@ This section should be completed **BEFORE** the workshop and can take up to an h
 The required software are as follows:
 
 1. [VirtualBox](#virtualbox)
-2. [Node.js](#nodejs)
-3. [Docker (with Compose)](#docker-with-compose)
-4. [kubectl](#kubectl)
-5. [MiniKube](#minikube)
-6. [Other bootstrapping](#other-bootstrapping)
+2. [Docker (with Compose)](#docker-with-compose)
+3. [kubectl](#kubectl)
+4. [MiniKube](#minikube)
+5. [Other bootstrapping](#other-bootstrapping)
 
 ## Topic End-Goal
 At the end of this section, you should be able to run `minikube start` and have the following output:
@@ -26,7 +25,7 @@ Kubectl is now configured to use the cluster.
 Loading cached images from config file.
 ```
 
-You should also be able to run `node`, `docker`, `docker-compose`, `kubectl`, and `vboxmanage` without any `No command ${CMD} found` errors.
+You should also be able to run `docker`, `docker-compose`, `kubectl`, and `vboxmanage` without any `No command ${CMD} found` errors.
 
 ## VirtualBox
 VirtualBox is the hypervisor that we will use to create the single-node cluster.
@@ -48,24 +47,6 @@ Your output should look something like:
 
 ```
 5.2.10r122088
-```
-
-## Node.js
-Node.js is the language runtime we'll be using to demonstrate an application that works well with container technologies.
-
-For all operating systems, use this link and select your platform: [https://nodejs.org/en/download/](https://nodejs.org/en/download/).
-
-### Verifying Node.js Installation
-Verify Docker is installed correctly by running the following in your Terminal/PowerShell:
-
-```bash
-node -v;
-```
-
-This should yield a version number:
-
-```
-v8.11.1
 ```
 
 ## Docker (with Compose)
@@ -142,7 +123,7 @@ Client Version: version.Info{Major:"1", Minor:"11", GitVersion:"v1.11.1", GitCom
 ```
 
 ## MiniKube
-Minikube is a k8s deployment that works on a single virtual machine (node).
+Minikube is a k8s deployment that works on a single virtual machine (termed a node).
 
 For all operating systems, follow the instructions at this link: [https://github.com/kubernetes/minikube/releases](https://github.com/kubernetes/minikube/releases).
 
@@ -187,5 +168,17 @@ minikube version: v0.28.0
 ```
 
 ## Other Bootstrapping
-1. Navigate to `./01-application/example-app` and run `npm install`
-2. Navigate to `./01-application/notifier` and run `npm install`
+### External Docker Images
+Just in case the conference WiFi isn't too good and you aren't willing to use your mobile data, you can run the following command to grab all the external Docker images we will be using before the conference:
+
+```bash
+docker pull \
+  node:8.11.3-alpine \
+  ubuntu:16.04 \
+  alpine:3.2 \
+  alpine:3.8 \
+  bharathshetty4/supermario \
+  wordpress:4.9.8-php7.1-apache \
+  mysql:5.7.23 \
+;
+```
