@@ -37,8 +37,8 @@ Docker Compose creates an isolated network where the provisional contianers can 
 ## Activity 1: A Local WordPress Deployment
 Click here to [start deploying a WordPress service locally](./ACTIVITY-01.md).
 
-## Activity 2: Setting up for WordPress Plugin Development
-Click here to [start provisioning an environment for developing plugins on WordPress](./ACTIVITY-02.md).
+## Activity 2: Provisioning a Development Environment
+Click here to [start provisioning an environment for developing a custom application](./ACTIVITY-02.md).
 
 # References
 - [Compose file version 3 reference](https://docs.docker.com/compose/compose-file/)
