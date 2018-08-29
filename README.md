@@ -50,9 +50,11 @@ It is very highly recommended that you are on MacOS ([get a Mac on Carousell](ht
 > **Windows will not be supported**, so use Windows at your own discretion - using a virtual machine running Linux is not encouraged since we will be running a virtual machine as part of this workshop. 
 
 ### Software
-It is highly recommended that the command `minikube start` works on your machine before the workshop as this workshop will be conducted in a constrained period of time.
+**IMPORTANT** It is highly recommended that the command `minikube start` works on your machine before the workshop as this workshop will be conducted in a constrained period of time.
 
-Follow the instructions at [THIS PAGE](./00-setup/README.md) to get your machine ready for the workshop!
+Follow the instructions at [THIS PAGE](./00-setup/README.md) to get your machine ready for the workshop.
+
+> In the event that the WiFi fails, you may have to use your own data plan to pull in Docker images (hint: not a good idea for your wallet), so do run through the setup completely including the section on pre-downloading workshop material.
 
 ## About The Workshop Facilitator
 Joseph is a DevOps engineer hailing from the Agile Consulting & Engineering tribe at Government Digital Services. He spends his day optimising and maintaining CI/CD pipelines and making the codebase easier to work with for developers.
@@ -61,10 +63,10 @@ He enjoys evangelising on Agile and deployment-related affairs in software engin
 
 Check out his articles at [https://medium.com/@joeir](https://medium.com/@joeir) and his (wasteland of) projects at [https://github.com/zephinzer](https://github.com/zephinzer).
 
-## Slides
-You can find the slides for this workshop at [this link](http://bit.ly/gtcdk8s).
-
 - - -
 
 ## Cheers
 It's weird writing about myself as a third party ^. See you there!
+
+## Slides
+You can find the slides for this workshop at [this link](http://bit.ly/gtcdk8s).

@@ -7,7 +7,8 @@ The required software are as follows:
 2. [Docker (with Compose)](#docker-with-compose)
 3. [kubectl](#kubectl)
 4. [MiniKube](#minikube)
-5. [Other bootstrapping](#other-bootstrapping)
+5. [Node](#node)
+6. [Other bootstrapping](#other-bootstrapping)
 
 ## Topic End-Goal
 At the end of this section, you should be able to run `minikube start` and have the following output:
@@ -127,6 +128,8 @@ Minikube is a k8s deployment that works on a single virtual machine (termed a no
 
 For all operating systems, follow the instructions at this link: [https://github.com/kubernetes/minikube/releases](https://github.com/kubernetes/minikube/releases).
 
+> **Important**: Please use version v0.28.2 as it has been tested to work best out of all.
+
 ### [Mac/Linux-Only] Solving inability to create host-only adapter
 If you encounter the following error:
 
@@ -146,7 +149,7 @@ sudo /Library/Application\ Support/VirtualBox/LaunchDaemons/VirtualBoxStartup.sh
 If all is well, your output should look like:
 
 ### [Mac/Linux-Only] Solving `kube-proxy` unable to start
-If you encounter the following error:
+This may or may not happen depending on your machine. If you encounter the following error:
 
 ```
 E0715 02:10:13.259782   16316 start.go:281] Error restarting cluster:  restarting kube-proxy: waiting for kube-proxy to be up for configmap update: timed out waiting for the condition
@@ -164,8 +167,11 @@ minikube version
 Your output should look like:
 
 ```
-minikube version: v0.28.0
+minikube version: v0.28.2
 ```
+
+## Node
+Download and install Node from [the official page](https://nodejs.org/en/). We won't be using it much but it is useful to run some of the examples without a container just to see what it's like and the conveniences which containerisation brings.
 
 ## Other Bootstrapping
 ### External Docker Images
@@ -173,10 +179,18 @@ Just in case the conference WiFi isn't too good and you aren't willing to use yo
 
 ```bash
 docker pull \
-  node:8.11.3-alpine \
+  node:8.11.4-alpine \
   ubuntu:16.04 \
   alpine:3.2 \
   alpine:3.8 \
+  fluent/fluentd:v1.1.0 \
+  prom/alertmanager:v0.15.1 \
+  grafana/grafana:5.2.1 \
+  docker.elastic.co/elasticsearch/elasticsearch:6.3.1 \
+  justwatch/elasticsearch_exporter:1.0.2 \
+  docker.elastic.co/kibana/kibana:6.3.1 \
+  prom/prometheus:v2.3.2 \
+  openzipkin/zipkin:2.10.2 \
   bharathshetty4/supermario \
   wordpress:4.9.8-php7.1-apache \
   mysql:5.7.23 \
