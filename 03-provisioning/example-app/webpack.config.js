@@ -90,7 +90,7 @@ module.exports = {
   plugins: [
     new WebpackDefinePlugin({
       'global.app.environment': `"${process.env.NODE_ENV || 'production'}"`,
-      'global.app.apiUrl': `${process.env.API_URL || 'http://localhost:8000'}`,
+      'global.app.apiUrl': `${process.env.API_URL || '"http://localhost:8000"'}`,
     }),
     new WebpackHtmlPlugin({
       template: PATH_HTML,

@@ -1,4 +1,4 @@
-# The Cloud Native Application
+# Cloud Native Applications
 A container-ready application is also known as being cloud native and should abide by the guidelines in the [The Twelve-Factor App](https://12factor.net/).
 
 All container-ready applications should minimally contain the following code instrumentations:
@@ -10,7 +10,6 @@ All container-ready applications should minimally contain the following code ins
 5. [Distributed tracing](#distributed-tracing)
 
 # Section Objectives
-
 1. Understand code instrumentations in a cloud native application
 2. Have a big-picture view of what else is around a container
 3. Understand what health checks mean
@@ -150,9 +149,7 @@ Initiate a chat to your bot with `/start` and it should respond with the chat ID
 [Click here to access Activity 1](./ACTIVITY-01.md).
 
 # Next Steps
-Now that we know what goes into a cloud native application, let's start from ground 0: the `Dockerfile`.
-
-Click here to move onto [Containerising an application](../02-containerisating/README.md).
+Click here to [move on to Application Containerisation](../02-containerisating/README.md).
 
 # References & Further Reading
 1. [The Twelve-Factor App](https://12factor.net/)

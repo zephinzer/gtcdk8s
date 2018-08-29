@@ -11,7 +11,10 @@
     "db:update": "npm run db:check && npm run db:migrate && npm run db:seed",
     "dev:api": "node ./index.js",
     "dev:ui": "cross-env NODE_ENV=development webpack-serve ./webpack.config.js",
-    "dev": "docker-compose -f ./provisioning/compose/docker-compose.yml up dev-api dev-ui"
+    "predev": "docker-compose -f ./provisioning/compose/docker-compose.yml build",
+    "dev": "docker-compose -f ./provisioning/compose/docker-compose.yml up dev-ui dev-api",
+    "predev:db-update": "npm run predev",
+    "dev:db-update": "docker-compose -f ./provisioning/compose/docker-compose.yml up dev-db-updater"
   },
   "keywords": [],
   "author": "zephinzer",

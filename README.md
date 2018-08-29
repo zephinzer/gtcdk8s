@@ -14,11 +14,12 @@ Enter the world of containerisation in both development and production environme
 - VirtualBox
 
 ## Topics
-1. [The cloud native application](./01-application/README.md)
-2. [Containerising an application](./02-containerising/README.md)
-3. [Provisioning an environment](./03-provisioning/README.md)
-4. [Deploying an application](./04-deploying/README.md)
-5. [Continuous integration/delivery](./05-cicd/README.md)
+0. [Setting Up (**Complete before Workshop**)]()./00-setup/README.md)
+1. [Cloud Native Applications](./01-application/README.md)
+2. [Application Containerisation](./02-containerising/README.md)
+3. [Environment Provisioning](./03-provisioning/README.md)
+4. [Deploying Containers in Production](./04-deploying/README.md)
+5. [Continuous Integration/Delivery](./05-cicd/README.md)
 
 ## Workshop Objectives
 

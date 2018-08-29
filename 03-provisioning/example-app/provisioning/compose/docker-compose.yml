@@ -1,0 +1,63 @@
+version: "3"
+services:
+  dev-api:
+    # build the Dockerfile we created earlier
+    build:
+      context: ../../
+      dockerfile: ./provisioning/images/Dockerfile
+      args:
+        ENV_FLAG: '--development'
+    # its development and live-reload would be nice!
+    entrypoint: ["./node_modules/.bin/nodemon", "--exec", "npm", "run", "dev:api"]
+    # telling knex where to find the database (optional)
+    environment:
+      - DB_HOST=database
+      - DB_PORT=3306
+      - DB_USER=username
+      - DB_PASSWORD=password
+      - DB_DATABASE=blog
+    # the port which the service listens to by default
+    ports:
+      - "8000:8000" # HOST:CONTAINER
+    # map the volumes so that we have live reloading
+    volumes:
+      - "../../db:/app/db"
+      - "../../index.js:/app/index.js"
+      - "../../knexfile.js:/app/knexfile.js"
+      - "../../webpack.config.js:/app/webpack.config.js"
+    # we need the database to be up before the API is of any use
+    depends_on:
+      - database
+  dev-ui:
+    # use the same Dockerfile - reuse, reduce and recycle!
+    build:
+      context: ../../
+      dockerfile: ./provisioning/images/Dockerfile
+      args:
+        ENV_FLAG: '--development'
+    # different from dev-api
+    entrypoint: ["npm", "run", "dev:ui"]
+    environment:
+      - API_URL="http://localhost:8000"
+      - NODE_ENV="development"
+    # expose ports required by webpack-serve
+    ports:
+      - "8080:8080" # project port for the UI
+      - "8081:8081" # websocket port for hot reloading
+    # map the volumes so that we have hot reloading
+    volumes:
+      - "../../src:/app/src"
+      - "../../webpack.config.js:/app/webpack.config.js"
+    depends_on:
+      - dev-api
+  database:
+    image: mysql:5.7.23
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=blog
+      - MYSQL_USER=username
+      - MYSQL_PASSWORD=password
+    volumes:
+      - "../data/mysql:/var/lib/mysql"
+    ports:
+      - "3306:3306"

@@ -1,11 +1,43 @@
+# ./example-app/provisioning/compose/dev.docker-compose.yml
+# this compose prepares a development 
 version: "3"
 services:
-  dev-ui:
+  dev-api:
+    # build the Dockerfile we created earlier
     build:
       context: ../../
-      dockerfile: ./provisioning/images/dev.Dockerfile
+      dockerfile: ./provisioning/images/Dockerfile
       args:
         ENV_FLAG: '--development'
+    # its development and live-reload would be nice!
+    entrypoint: ["./node_modules/.bin/nodemon", "--exec", "npm", "run", "dev:api"]
+    # telling knex where to find the database (optional)
+    environment:
+      - DB_HOST=database
+      - DB_PORT=3306
+      - DB_USER=username
+      - DB_PASSWORD=password
+      - DB_DATABASE=blog
+    # the port which the service listens to by default
+    ports:
+      - "8000:8000" # HOST:CONTAINER
+    # map the volumes so that we have live reloading
+    volumes:
+      - "../../db:/app/db"
+      - "../../index.js:/app/index.js"
+      - "../../knexfile.js:/app/knexfile.js"
+      - "../../webpack.config.js:/app/webpack.config.js"
+    # we need the database to be up before the API is of any use
+    depends_on:
+      - database
+  dev-ui:
+    # use the same Dockerfile - reuse, reduce and recycle!
+    build:
+      context: ../../
+      dockerfile: ./provisioning/images/Dockerfile
+      args:
+        ENV_FLAG: '--development'
+    # different from dev-api
     entrypoint: ["npm", "run", "dev:ui"]
     environment:
       - API_URL="http://localhost:8000"
@@ -20,33 +52,10 @@ services:
       - "../../webpack.config.js:/app/webpack.config.js"
     depends_on:
       - dev-api
-  dev-api:
-    build:
-      context: ../../
-      dockerfile: ./provisioning/images/dev.Dockerfile
-      args:
-        ENV_FLAG: '--development'
-    entrypoint: ["./node_modules/.bin/nodemon", "--exec", "npm", "run", "dev:api"]
-    environment:
-      - DB_HOST=database
-      - DB_PORT=3306
-      - DB_USER=username
-      - DB_PASSWORD=password
-      - DB_DATABASE=blog
-    ports:
-      - "8000:8000"
-    # map the volumes so that we have live reloading
-    volumes:
-      - "../../db:/app/db"
-      - "../../index.js:/app/index.js"
-      - "../../knexfile.js:/app/knexfile.js"
-      - "../../webpack.config.js:/app/webpack.config.js"
-    depends_on:
-      - database
   dev-db-updater:
     build:
       context: ../../
-      dockerfile: ./provisioning/images/dev.Dockerfile
+      dockerfile: ./provisioning/images/Dockerfile
       args:
         ENV_FLAG: '--development'
     entrypoint: ["npm", "run", "db:update"]

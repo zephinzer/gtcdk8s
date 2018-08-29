@@ -1,8 +1,7 @@
-# Containerising an application
+# Application Containerisation
 Containers are similar to VMs, except that while VMs create new kernels, containers typically share kernels and operating level resources with the host system. This results in faster boot times in exchange for lower levels of isolation.
 
 # Section Objectives
-
 1. Concepts in container technologies
 2. Introduction of the Dockerfile
 3. Understand and use basic Docker commands

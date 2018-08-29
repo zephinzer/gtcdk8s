@@ -1,16 +1,16 @@
-## Activity 1: A Local WordPress Deployment
+# Activity 1: A Local WordPress Deployment
 
-### 1.1 Find the Image
+## 1.1 Find the Image
 Go to [Docker Hub](https://hub.docker.com/) and search for Wordpress in the upper navigation bar.
 
 You will probably see a search listing labelled with *"official"*. This *"official"* indicates that it is released by the Docker team themselves and is probably more reliable than other images you might find externally.
 
 Clicking on the search listing will bring you to the image's page. You [can also click here if you're feeling lazy](https://hub.docker.com/_/wordpress/).
 
-### 1.2 RTFM
+## 1.2 RTFM
 The image's page on Docker Hub should tell you everything you need to know on how to pull the image and how to configure the container.
 
-#### 1.2.1 Understanding Tags
+### 1.2.1 Understanding Tags
 The first important thing to get out of the image's page is the supported tags. These tags indicate the variant of the image which can come in the form of differences in:
 
 - base system *(eg. `ubuntu`, `alpine`, etc)*
@@ -18,7 +18,7 @@ The first important thing to get out of the image's page is the supported tags. 
 - runtime version
 - service version
 
-#### 1.2.2 Configuring an Image
+### 1.2.2 Configuring an Image
 The next point to note on the image's page is the available environment variables to configure the service's behaviour..
 
 On the [WordPress image page](https://hub.docker.com/_/wordpress/) under the section **How to use this image**, we find a number of available configurations:
@@ -31,7 +31,7 @@ On the [WordPress image page](https://hub.docker.com/_/wordpress/) under the sec
 
 These are values which we can use to configure WordPress. In the case of the above highlighted environment variables, this tells WordPress where to find the database.
 
-### 1.3 Using the Image
+## 1.3 Using the Image
 We begin by creating a file named `docker-compose.yml` in the current directory.
 
 Inside the file, the first thing we have to define is the version of the compose file. Add the following line to the compose file:
@@ -66,7 +66,7 @@ Attempt to set up WordPress and we'll find ourselves blocked by a page requestin
 
 Remember the section above on the environment variables that the `wordpress` image is configured with? Here's where they come in useful. But first, we need to spin up an instance of MySQL - or do we?
 
-### 1.4 Adding Support Services
+## 1.4 Adding Support Services
 
 Append the `database` service to your Docker Compose as a key under the `services` property (confirm that the indentiation of the `database` word is the same as `blog`):
 
@@ -99,3 +99,10 @@ Change the **Database Host** to `"database"`. This corresponds to the name of th
 Run the installation set the administration up and you should reach a page with **Success!** printed on it.
 
 We're done here!
+
+- - -
+
+# Next Steps
+Move on to [Activity 2: Provisioning a Development Environment](./ACTIVITY-02.md).
+
+Or go [back to the main Section on Provisioning Environments](./READNE.md).

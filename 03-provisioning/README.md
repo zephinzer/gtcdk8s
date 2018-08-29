@@ -1,12 +1,11 @@
-# Provisioning an Environment
+# Environment Provisioning
 Now that we've managed to [containerise an application](../02-containerising), the natural progression would be to see how we can deploy multiple of these.
 
 # Section Objectives
-
-1. Concepts in environment provisioning
-2. Introduction to the Docker Compose manifest
-3. Setting up a service
-4. Setting up a development environment
+1. Understand concepts in environment provisioning
+2. Introduction to the Docker Compose file
+3. Running existing services locally
+4. Provisioning a development environment
 
 # Why environment provisioning?
 ## Support services
@@ -34,11 +33,14 @@ When we need to run multiple of these containers within an isolated network, tha
 
 Docker Compose creates an isolated network where the provisional contianers can reside and interact with each other without affecting the system.
 
-## Activity 1: A Local WordPress Deployment
+# Activity 1: A Local WordPress Deployment
 Click here to [start deploying a WordPress service locally](./ACTIVITY-01.md).
 
-## Activity 2: Provisioning a Development Environment
+# Activity 2: Provisioning a Development Environment
 Click here to [start provisioning an environment for developing a custom application](./ACTIVITY-02.md).
+
+# Next Steps
+Move on to the next section on [Deploying Containers in Production](../04-deploying.md).
 
 # References
 - [Compose file version 3 reference](https://docs.docker.com/compose/compose-file/)
