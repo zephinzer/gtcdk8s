@@ -11,6 +11,7 @@
   - [Required Software](#required-software)
   - [Required Resources](#required-resources)
 - [About Me](#about-the-facilitator)
+- [Get Started](#get-started)
 
 ## Synopsis
 Developer-onboarding taking ages because of required supporting services? Having issues with "*but it works on my machine*"-like complaints? Searching for a way to deploy your application reliably and in an automated manner? Sounds like you could do with some container technology!
@@ -79,3 +80,5 @@ He enjoys evangelising on Agile and deployment-related affairs in software engin
 Check out his articles at [https://medium.com/@joeir](https://medium.com/@joeir) and his (wasteland of) projects at [https://github.com/zephinzer](https://github.com/zephinzer).
 
 # Cheers
+
+# [Get Started](./00-setup/README.md)
