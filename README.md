@@ -58,7 +58,6 @@ Other roles are welcome too, but you might not get the most out of this!
 ### Required Software
 **IMPORTANT** Follow the instructions at [THIS PAGE ON SETTING UP](./00-setup/README.md) to get your machine ready for the workshop. This will take roughly an hour at most.
 
-#### TL;DR
 You will need the following software installed before the workshop starts:
 
 1. [VirtualBox](./00-setup/README.md#virtualbox)
