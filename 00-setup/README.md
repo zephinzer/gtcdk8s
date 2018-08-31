@@ -1,7 +1,12 @@
 # Topic 0: Setting Up
 This section should be completed **BEFORE** the workshop and can take up to an hour to complete.
 
-The required software are as follows:
+
+
+
+
+## Objectives
+Install the required software as follows:
 
 1. [VirtualBox](#virtualbox)
 2. [Docker (with Compose)](#docker-with-compose)
@@ -9,6 +14,10 @@ The required software are as follows:
 4. [MiniKube](#minikube)
 5. [Node](#node)
 6. [Other bootstrapping](#other-bootstrapping)
+
+
+
+
 
 ## Topic End-Goal
 At the end of this section, you should be able to run `minikube start` and have the following output:
@@ -28,6 +37,10 @@ Loading cached images from config file.
 
 You should also be able to run `docker`, `docker-compose`, `kubectl`, and `vboxmanage` without any `No command ${CMD} found` errors.
 
+
+
+
+
 ## VirtualBox
 VirtualBox is the hypervisor that we will use to create the single-node cluster.
 
@@ -35,9 +48,11 @@ Go to this link - [https://www.virtualbox.org/wiki/Downloads](https://www.virtua
 
 For Linux users, follow the instructions at this page: [https://www.virtualbox.org/wiki/Linux_Downloads](https://www.virtualbox.org/wiki/Linux_Downloads).
 
-> **Note** If you're running Ubuntu on a machine with Secure Boot enabled, the easier way is to use another machine. If you choose to continue with this, follow the steps in [./virtualbox-on-ubuntu-with-secure-boot.md](./virtualbox-on-ubuntu-with-secure-boot.md).
+### VirtualBox Installation Notes
+#### Secure Boot needs to be disabled?
+If you're running Ubuntu on a machine with Secure Boot enabled, the easier way is to use another machine. If you choose to continue with this, follow the steps in [./virtualbox-on-ubuntu-with-secure-boot.md](./virtualbox-on-ubuntu-with-secure-boot.md) (warning: not trivial).
 
-### Verify VirtualBox Installation
+#### Verifying VirtualBox Installation
 Verify that VirtualBox is correctly installed by running the following in your Terminal/PowerShell:
 
 ```sh
@@ -50,6 +65,10 @@ Your output should look something like:
 5.2.10r122088
 ```
 
+
+
+
+
 ## Docker (with Compose)
 Docker is the containerisation tool we'll be using.
 
@@ -61,20 +80,9 @@ Docker is the containerisation tool we'll be using.
 | Windows (older) | [https://docs.docker.com/toolbox/toolbox_install_windows/](https://docs.docker.com/toolbox/toolbox_install_windows/) | Install via this link ONLY IF your system does not support the above link |
 | MacOS | [https://store.docker.com/editions/community/docker-ce-desktop-mac](https://store.docker.com/editions/community/docker-ce-desktop-mac) | You lucky child |
 
-### [Linux-Only] Running Docker without `root`
-> This is a convenience solution that exposes certain vulnerabilities in Docker. Since for Linux environments we're actually sharing our machine's kernel with Docker, you may want to disable this at the end of the workshop. You have been warned!
-
-Run:
-
-```bash
-sudo groupadd docker;
-sudo usermod -aG docker $USER;
-```
-
-Log out of your system and log back in for changes to take effect.
-
-### [Linux-Only] Installing Docker Compose
-Install `pip` first (the alternative is to download the Docker Compose binary which is as convenient to update):
+### Docker Installation Notes
+#### [Linux-Only] Installing Docker Compose
+Install `pip` first (the alternative is to download the Docker Compose binary which isn't as convenient to update):
 
 ```bash
 # ubuntu
@@ -92,10 +100,22 @@ Next, install `docker-compose` with `pip`:
 pip install docker-compose;
 ```
 
-### Verifing Docker Installation
+#### [Linux-Only] Running Docker without `root`
+> This is a convenience solution that exposes certain vulnerabilities in Docker. Since for Linux environments we're actually sharing our machine's kernel with Docker, you may want to disable this at the end of the workshop. You have been warned!
+
+Run:
+
+```bash
+sudo groupadd docker;
+sudo usermod -aG docker $USER;
+```
+
+Log out of your system and log back in for changes to take effect.
+
+#### Verifying `docker` Installation
 Verify Docker is installed correctly by running the following in your Terminal/PowerShell:
 
-```sh
+```bash
 docker --version;
 ```
 
@@ -105,6 +125,21 @@ Your output should look like:
 Docker version 18.03.1-ce, build 9ee9f40
 ```
 
+#### Verifying `docker-compose` Installation
+Verify Docker Compose is installed correctly by running the following in your Terminal/PowerShell:
+
+```bash
+docker-compose version;
+```
+
+Your output should look like:
+
+```
+docker-compose version 1.20.1, build 5d8c71b
+docker-py version: 3.2.1
+CPython version: 2.7.12
+OpenSSL version: OpenSSL 1.0.2g  1 Mar 2016
+```
 
 
 
@@ -114,7 +149,8 @@ Kubectl is the command line tool we'll be using to communicate with our k8s mast
 
 For all operating systems, follow the instructions at this link to install `kubectl`: [https://kubernetes.io/docs/tasks/tools/install-kubectl/](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 
-### Verify `kubectl` Installation
+### kubectl Installation Notes
+#### Verifying `kubectl` Installation
 Verify `kubectl` is correctly set up by running the following in your Terminal/Powershell:
 
 ```sh
@@ -138,7 +174,8 @@ For all operating systems, follow the instructions at this link: [https://github
 
 > **Important**: Please use version v0.28.2 as it has been tested to work best out of all.
 
-### [Mac/Linux-Only] Solving inability to create host-only adapter
+### MiniKube Installation Notes
+#### [Mac/Linux-Only] Solving inability to create host-only adapter
 If you encounter the following error:
 
 ```
@@ -157,7 +194,7 @@ sudo /Library/Application\ Support/VirtualBox/LaunchDaemons/VirtualBoxStartup.sh
 
 If all is well, your output should look like:
 
-### [Mac/Linux-Only] Solving `kube-proxy` unable to start
+#### [Mac/Linux-Only] Solving `kube-proxy` unable to start
 This may or may not happen depending on your machine. If you encounter the following error:
 
 ```
@@ -166,11 +203,11 @@ E0715 02:10:13.259782   16316 start.go:281] Error restarting cluster:  restartin
 
 Simply run `minikube delete` and `minikube start` again.
 
-### Verify MiniKube Installation
+#### Verifying MiniKube Installation
 Verify MiniKube is correctly set up by running the following in your Terminal:
 
-```sh
-minikube version
+```bash
+minikube version;
 ```
 
 Your output should look like:
@@ -179,12 +216,66 @@ Your output should look like:
 minikube version: v0.28.2
 ```
 
+Also verify that it runs well.
+
+```bash
+minikube start;
+```
+
+This should exit without errors and should display something like:
+
+```
+Starting local Kubernetes v1.10.0 cluster...
+Starting VM...
+Getting VM IP address...
+Moving files into cluster...
+Setting up certs...
+Connecting to cluster...
+Setting up kubeconfig...
+Starting cluster components...
+Kubectl is now configured to use the cluster.
+Loading cached images from config file.
+```
+
+You can then run the following to verify that all is well with the execution:
+
+```bash
+minikube status;
+```
+
+This should yield something similar to:
+
+```
+minikube: Running
+cluster: Running
+kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.100
+```
+
+Well done, that was possibly the toughest installation for this workshop.
+
 
 
 
 
 ## Node
-Download and install Node from [the official download page](https://nodejs.org/en/download/). We won't be using it much but it is useful to run some of the examples without a container just to see what it's like and the conveniences which containerisation brings.
+
+> We won't be using Node much but it is useful to run some of the examples without a container just to see what it's like and the conveniences which containerisation brings.
+
+Download and install Node from [the official download page](https://nodejs.org/en/download/). 
+
+### Node Installation Notes
+#### Verifying Node Installation
+Verify Node is correctly set up by running the following in your Terminal:
+
+```bash
+node -v;
+```
+
+Your output should look like:
+
+```
+v8.11.4
+```
 
 
 
@@ -192,7 +283,7 @@ Download and install Node from [the official download page](https://nodejs.org/e
 
 ## Other Bootstrapping
 ### External Docker Images
-Just in case the conference WiFi isn't too good and you aren't willing to use your mobile data, you can run the following command to grab all the external Docker images we will be using before the conference:
+Just in case the conference WiFi isn't too good and you aren't willing to use your mobile data, you can run the following command **from the root of this repository** to grab all the external Docker images we will be using before the conference:
 
 ```bash
 make pull.images;
@@ -205,3 +296,6 @@ If you don't have `make` installed, install it via Brew:
 ```bash
 brew install make;
 ```
+
+# Next Steps
+All set up? Head [over to the first section - Cloud Native Applications](../01-application/README.md).
