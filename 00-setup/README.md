@@ -105,12 +105,16 @@ Your output should look like:
 Docker version 18.03.1-ce, build 9ee9f40
 ```
 
+
+
+
+
 ## kubectl
 Kubectl is the command line tool we'll be using to communicate with our k8s master instance.
 
 For all operating systems, follow the instructions at this link to install `kubectl`: [https://kubernetes.io/docs/tasks/tools/install-kubectl/](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 
-## Verify `kubectl` Installation
+### Verify `kubectl` Installation
 Verify `kubectl` is correctly set up by running the following in your Terminal/Powershell:
 
 ```sh
@@ -122,6 +126,10 @@ Your output should look like:
 ```
 Client Version: version.Info{Major:"1", Minor:"11", GitVersion:"v1.11.1", GitCommit:"2bba0127d85d5a46ab4b778548be28623b32d0b0", GitTreeState:"clean", BuildDate:"2018-05-21T09:17:39Z", GoVersion:"go1.9.3", Compiler:"gc", Platform:"linux/amd64"}
 ```
+
+
+
+
 
 ## MiniKube
 Minikube is a k8s deployment that works on a single virtual machine (termed a node).
@@ -142,6 +150,7 @@ Run the following command to restart the VirtualBox service:
 ```sh
 # for linux:
 sudo /sbin/rcvboxdrv restart;
+
 # for mac:
 sudo /Library/Application\ Support/VirtualBox/LaunchDaemons/VirtualBoxStartup.sh restart
 ```
@@ -170,29 +179,29 @@ Your output should look like:
 minikube version: v0.28.2
 ```
 
+
+
+
+
 ## Node
-Download and install Node from [the official page](https://nodejs.org/en/). We won't be using it much but it is useful to run some of the examples without a container just to see what it's like and the conveniences which containerisation brings.
+Download and install Node from [the official download page](https://nodejs.org/en/download/). We won't be using it much but it is useful to run some of the examples without a container just to see what it's like and the conveniences which containerisation brings.
+
+
+
+
 
 ## Other Bootstrapping
 ### External Docker Images
 Just in case the conference WiFi isn't too good and you aren't willing to use your mobile data, you can run the following command to grab all the external Docker images we will be using before the conference:
 
 ```bash
-docker pull \
-  node:8.11.4-alpine \
-  ubuntu:16.04 \
-  alpine:3.2 \
-  alpine:3.8 \
-  fluent/fluentd:v1.1.0 \
-  prom/alertmanager:v0.15.1 \
-  grafana/grafana:5.2.1 \
-  docker.elastic.co/elasticsearch/elasticsearch:6.3.1 \
-  justwatch/elasticsearch_exporter:1.0.2 \
-  docker.elastic.co/kibana/kibana:6.3.1 \
-  prom/prometheus:v2.3.2 \
-  openzipkin/zipkin:2.10.2 \
-  bharathshetty4/supermario \
-  wordpress:4.9.8-php7.1-apache \
-  mysql:5.7.23 \
-;
+make pull.images;
+```
+
+The above command should pull all images required for the workshop.
+
+If you don't have `make` installed, install it via Brew:
+
+```bash
+brew install make;
 ```
