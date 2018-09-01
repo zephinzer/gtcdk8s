@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: game
+  name: game-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: game
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: game
+    spec:
+      containers:
+      - image: zephinzer/eg-whack-a-pod:game
+        imagePullPolicy: IfNotPresent
+        name: game-deployment
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+      restartPolicy: Always

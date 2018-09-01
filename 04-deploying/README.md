@@ -72,3 +72,5 @@ Click [here to go to the activity readme](./ACTIVITY-01.md).
 - [Elastic Kubernetes Service by Amazon](https://aws.amazon.com/eks/)
 - [Azure Kubernetes Service by Microsoft](https://azure.microsoft.com/en-us/services/kubernetes-service/)
 - [Container Service for Kubernetes by Alibaba Cloud](https://www.alibabacloud.com/en/product/kubernetes)
+
+- [Think before you use NodePort in Kubernetes](https://oteemo.com/2017/12/12/think-nodeport-kubernetes/)

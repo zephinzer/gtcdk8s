@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+  name: wap-ingress
+spec:
+  rules:
+  - host: whack-a-pod.local
+    http:
+      paths:
+      - backend:
+          serviceName: api
+          servicePort: 8080
+        path: /api/
+      - backend:
+          serviceName: admin
+          servicePort: 8080
+        path: /admin/
+      - backend:
+          serviceName: game
+          servicePort: 8080
+        path: /

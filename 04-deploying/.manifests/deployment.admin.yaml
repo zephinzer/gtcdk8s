@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: admin
+  name: admin-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admin
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: admin
+    spec:
+      containers:
+      - env:
+        - name: APIIMAGE
+          value: zephinzer/eg-whack-a-pod:api
+        image: zephinzer/eg-whack-a-pod:admin
+        imagePullPolicy: IfNotPresent
+        name: admin-deployment
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+      restartPolicy: Always
+      serviceAccount: wap-admin
+      serviceAccountName: wap-admin
