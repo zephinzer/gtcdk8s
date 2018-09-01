@@ -43,7 +43,7 @@ Services expose a Deployment to the subnet which Kubernetes has created. Service
 An Ingress is functionally like a reverse proxy. It directs an incoming request to the correct application by translating the specified hostname into a Node's IP address and the port on the Node which links to the Service of interest. The Service's load balancer then distributes the request to the Pods of the Deployment.
 
 ### Summary
-![Kubernetes Resource Types](./.resources/k8s-res-types.png)
+![Kubernetes Resource Types](../resources/k8s-res-types.png)
 
 
 # Activity 1: Create and Deploy an Application
