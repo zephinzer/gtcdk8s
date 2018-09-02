@@ -74,3 +74,4 @@ Click [here to go to the activity readme](./ACTIVITY-01.md).
 - [Container Service for Kubernetes by Alibaba Cloud](https://www.alibabacloud.com/en/product/kubernetes)
 
 - [Think before you use NodePort in Kubernetes](https://oteemo.com/2017/12/12/think-nodeport-kubernetes/)
+- [Minikube Cheat Sheet](https://medium.com/@wisegain/minikube-cheat-sheet-a273385e66c9)
