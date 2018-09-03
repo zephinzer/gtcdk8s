@@ -23,7 +23,7 @@ services:
       start_period: 10s
     ## for debugging/development:
     volumes:
-      - "./example-app:/app:Z"
+      - "./example-app/src:/app/src:Z"
     ports:
       - "40001:40001"
   application_2:
@@ -49,7 +49,7 @@ services:
       start_period: 10s
     ## for debugging/development:
     volumes:
-      - "./example-app:/app:Z"
+      - "./example-app/src:/app/src:Z"
     ports:
       - "40002:40002"
   application_3:
@@ -75,7 +75,7 @@ services:
       start_period: 10s
     ## for debugging/development:
     volumes:
-      - "./example-app:/app:Z"
+      - "./example-app/src:/app/src:Z"
     ports:
       - "40003:40003"
   alerts:
@@ -146,8 +146,6 @@ services:
     depends_on:
       - "logs_db"
   metrics:
-    logging:
-      driver: none
     image: prom/prometheus:v2.3.2
     ports:
       - "49090:9090"

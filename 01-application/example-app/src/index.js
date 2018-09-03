@@ -1,12 +1,5 @@
+const {Boilerplate} = require('@usvc/boilerplate');
 const convict = require('convict');
-const {
-  createConsoleTransport,
-  createFluentTransport,
-  createLogger,
-} = require('@mcf/logger');
-const createServer = require('@mcf/server-boilerplate-middleware');
-const {createTracer, getWinstonFormat} = require('@mcf/tracer');
-const {createRequest} = require('@mcf/request');
 
 const config = convict({
   serviceName: {
@@ -51,199 +44,180 @@ const config = convict({
   },
 });
 
-const tracer = createTracer({
-  localServiceName: config.get('serviceName'),
-  serverHost: config.get('zipkinHost'),
-  serverPort: config.get('zipkinPort'),
-  sampleRate: 1,
-});
-
-const context = tracer.getContext();
-
-const logger = createLogger({
-  formatters: [getWinstonFormat({context})],
-  level: 0,
-  transports: [
-    createConsoleTransport(),
-    createFluentTransport({
-      host: config.get('fluentHost'),
-      port: config.get('fluentPort'),
-    }),
+Boilerplate.init({
+  appAccessLoggingBypassUrls: ['/healthz', '/metrics'],
+  appCorsWhitelist: [
+    `http://localhost:${config.get('servicePort')}`
   ],
+  serviceId: config.get('serviceName'),
+  fluentdHost: config.get('fluentHost'),
+  fluentdPort: config.get('fluentPort'),
+  zipkinHost: config.get('zipkinHost'),
+  zipkinPort: config.get('zipkinPort'),
 });
 
-const request = createRequest({tracer: tracer.getTracer()});
+const {app, logger, request} = Boilerplate;
 
-const server = createServer({
-  tracing: {
-    tracer: tracer.getTracer(),
-    context: tracer.getContext(),
-  },
-});
-
-const instanceId = config.get('serviceName');
-const proxyIdOne = config.get('nextServer1Id');
-const proxyUrlOne = config.get('nextServer1Url');
-const proxyIdTwo = config.get('nextServer2Id');
-const proxyUrlTwo = config.get('nextServer2Url');
-
-server.use(tracer.getExpressMiddleware());
-
-/**
- * Retrieves the response from the next server #1
- */
-server.get('/next-server-1', (_request, response) => {
-  request(proxyIdOne, proxyUrlOne)
-    .then((res) => res.text())
-    .then((nextServerResponse) => {
-      response.json(nextServerResponse);
-    });
-});
-
-/**
- * Retrieves the response from the next server #2
- */
-server.get('/next-server-2', (_request, response) => {
-  request(proxyIdTwo, proxyUrlTwo)
-    .then((res) => res.text())
-    .then((nextServerResponse) => {
-      response.json(nextServerResponse);
-    });
-});
-
-/**
- * Use this to demonstrate what a multi-application call looks like in series
- */
-server.get('/next-servers-simple-sequential', (_request, response) => {
-  request(proxyIdOne, proxyUrlOne)
-    .then(() => request(proxyIdTwo, proxyUrlTwo))
-    .then(() => {
-      response.json('done - /next-servers-simple-sequential');
-    });
-});
-
-/**
- * Use this to demonstrate what a multi-application call looks like in parallel
- */
-server.get('/next-servers-simple-parallel', (_request, response) => {
-  Promise.all([
-    request(proxyIdOne, proxyUrlOne),
-    request(proxyIdTwo, proxyUrlTwo),
-  ]).then(() => {
-    response.json('done - /next-servers-simple-parallel');
-  });
-});
-
-/**
- * Use this to simulate a series of API calls to the various application instances
- */
-server.get('/next-servers-complex-sequential', (_request, response) => {
-  request(proxyIdOne, proxyUrlOne)
-    .then(() => request(proxyIdOne, `${proxyUrlOne}/next-server-1`))
-    .then(() => request(proxyIdOne, `${proxyUrlOne}/next-server-2`))
-    .then(() => request(proxyIdTwo, proxyUrlTwo))
-    .then(() => request(proxyIdTwo, `${proxyUrlTwo}/next-server-1`))
-    .then(() => request(proxyIdTwo, `${proxyUrlTwo}/next-server-2`))
-    .then(() => {
-      response.json('done - /next-servers-complex-sequential');
-    });
-});
-
-/**
- * Use this to simulate a complex network of API calls amongst application instances
- */
-server.get('/next-servers-complex-parallel', (_request, response) => {
-  Promise.all([
-    request(proxyIdOne, proxyUrlOne),
-    request(proxyIdOne, `${proxyUrlOne}/next-server-1`),
-    request(proxyIdOne, `${proxyUrlOne}/next-server-2`),
-    request(proxyIdTwo, proxyUrlTwo),
-    request(proxyIdOne, `${proxyUrlTwo}/next-server-1`),
-    request(proxyIdOne, `${proxyUrlTwo}/next-server-2`),
-  ]).then(() => {
-    response.json('done - /next-servers-complex-parallel');
-  });
-});
-
-server.get('/complex-error/:iteration', (req, response, next) => {
-  const {iteration} = req.params;
-  const nextNumber = (typeof iteration !== 'number') ? 5 : iteration - 1;
-  const proxies = [
-    {id: proxyIdOne, url: `${proxyUrlOne}`},
-    {id: proxyIdOne, url: `${proxyUrlOne}/next-server-1`},
-    {id: proxyIdOne, url: `${proxyUrlOne}/next-server-2`},
-    {id: proxyIdOne, url: `${proxyUrlOne}/next-servers-complex-sequential`},
-    {id: proxyIdOne, url: `${proxyUrlOne}/next-servers-complex-sequential`},
-    {id: proxyIdOne, url: `${proxyUrlOne}/complex-error/${nextNumber}`},
-    {id: proxyIdTwo, url: `${proxyUrlTwo}/complex-error/${nextNumber}`},
-    {id: proxyIdTwo, url: `${proxyUrlTwo}`},
-    {id: proxyIdTwo, url: `${proxyUrlTwo}`},
-    {id: proxyIdTwo, url: `${proxyUrlTwo}/next-server-1`},
-    {id: proxyIdTwo, url: `${proxyUrlTwo}/next-server-2`},
-    {id: proxyIdTwo, url: `${proxyUrlTwo}/next-servers-complex-sequential`},
-    {id: proxyIdTwo, url: `${proxyUrlTwo}/next-servers-simple-parallel`},
-    {id: proxyIdTwo, url: `${proxyUrlTwo}/error`}
-  ];
-  if (nextNumber > 0) {
-    Promise.all((() => {
-      let connections = [];
-      // we iterate to the number of proxies so that statistically we should get an error
-      for (let i = 0; i < proxies.length; ++i) {
-        const proxySelection = proxies[Math.floor(Math.random() * proxies.length)];
-        connections.push(
-          request(proxySelection.id, proxySelection.url).then((res) => res.json())
-        );
-      }
-      return connections;
-    })()).then((results) => {
-      console.info(results);
-      response.json({
-        results
-      });
-    }).catch((err) => {
-      response.json(err);
-    });
+function callServer(id, uri, callback) {
+  if (typeof uri === 'function') {
+    request(
+      config.get(`nextServer${id}Id`),
+      `${config.get(`nextServer${id}Url`)}`,
+      uri
+    );
   } else {
-    response.json('you got lucky');
+    request(
+      config.get(`nextServer${id}Id`),
+      `${config.get(`nextServer${id}Url`)}${uri}`,
+      callback
+    );
+  }
+}
+
+app.get('/', (req, res) => {
+  res.json(`hello from ${config.get('serviceName')}`);
+});
+
+app.get('/next-1', (req, res) => {
+  callServer(1,
+    (error, response, body) => {
+      res.json(JSON.parse(body));
+    }
+  );
+});
+
+app.get('/next-2', (req, res) => {
+  callServer(2,
+    (error, response, body) => {
+      res.json(JSON.parse(body));
+    }
+  );
+});
+
+app.get('/next-sequential', (req, res) => {
+  callServer(1, (error, response, body1) =>
+    callServer(2,
+      (error, response, body2) =>
+        res.json([
+          {response: JSON.parse(body1)},
+          {response: JSON.parse(body2)},
+        ])));
+});
+
+app.get('/next-parallel', (req, res) => {
+  const responses = [];
+  const tryToFinish = () => {
+    if (responses.length === 2) {
+      res.json(responses);
+    };
+  }
+  callServer(1,
+    (error, response, body) => {
+      responses.push({
+        response: JSON.parse(body),
+      });
+      tryToFinish();
+    }
+  );
+  callServer(2,
+    (error, response, body) => {
+      responses.push({
+        response: JSON.parse(body),
+      });
+      tryToFinish();
+    }
+  );
+});
+
+app.get('/next-complex/:iteration', (req, res) => {
+  let {iteration} = req.params;
+  iteration = iteration - 0;
+  const possibleCalls = [
+    {id: 1},
+    {id: 1, uri: '/next-1'},
+    {id: 1, uri: '/next-parallel'},
+    {id: 1, uri: '/next-sequential'},
+    iteration !== 0 ? {id: 1, uri: `/next-complex/${iteration - 1}`} : undefined,
+    {id: 2},
+    {id: 2, uri: '/next-2'},
+    {id: 2, uri: '/next-parallel'},
+    {id: 2, uri: '/next-sequential'},
+    iteration != 0 ? {id: 2, uri: `/next-complex/${iteration - 1}`} : undefined,
+    {id: 2, uri: '/error'},
+  ].filter((v) => v !== undefined);
+  const calls = (() => {
+    const _calls = [];
+    for (let i = 0; i < 5; ++i) {
+      _calls.push(possibleCalls[Math.floor(Math.random() * possibleCalls.length)]);
+    }
+    return _calls;
+  })();
+  const responses = [];
+  let responseCount = 0;
+  let errorsExist = false;
+  const tryToFinish = () => {
+    if (responseCount === calls.length) {
+      if (errorsExist) {
+        res.json(responses);
+      } else {
+        logger.error(responses);
+        res
+          .status(500)
+          .json('AN ERROR OCCURRED. Visit http://localhost:49411 to see the trace. Or visit http://localhost:45601 to see the logs.');
+      }
+    }
+  }
+  const callback = (_error, _response, body) => {
+    if (_response.statusCode === 500) {
+      errorsExist = true;
+    }
+    responseCount += 1;
+    const response = JSON.parse(body);
+    if (typeof response === 'string') {
+      responses.push({response});
+    } else if (response instanceof Array) {
+      response.forEach((individualResponse) => {
+        responses.push(individualResponse);
+      });
+    }
+    tryToFinish();
+  };
+  calls.forEach((call) => {
+    if (call.uri) {
+      callServer(call.id, call.uri, callback);
+    } else {
+      callServer(call.id, callback);
+    }
+  })
+});
+
+app.get('/error', (req, res) => {
+  throw new Error(`erroring out from ${config.get('serviceName')}`);
+});
+
+app.use((err, req, res, next) => {
+  logger.info(err);
+  res.status(500);
+  if (err.message) {
+    res.json(err.message);
+  } else {
+    res.json('an unknown error happened.');
   }
 });
 
-/**
- * Use this to simulate an error which will hit the all-encompassing error-handler
- */
-server.get('/error', (_request, _response, next) => {
-  logger.error('Something disastrous happens here');
-  next(new Error('Something disastrous happened'));
-});
-
-server.get('/healthz', (_request, response) => {
-  response
-    .status(200)
-    .json('ok');
-});
-
-/**
- * Base replies
- */
-server.get('/', (request, response) => {
-  logger.info(`Hello from ${instanceId}`);
-  response.json(`Hello from ${instanceId}`);
-});
-
-/**
- * The all-encompassing error handler
- */
-server.use((err, _request, response, _next) => {
-  response
-    .status(500)
-    .json({
-      message: err.message,
-      stack: err.stack.split('\n'),
-    });
-});
-
-const instance = server.listen(config.get('servicePort'));
-
-instance.on('listening', () => {
-  logger.info(`Listening at http://127.0.0.1:${instance.address().port}`);
+const server = app.listen(config.get('servicePort'));
+server.on('listening', (req, res) => {
+  logger.info(`${config.get('serviceName')} listening on port http://localhost:${server.address().port}`);
+  logger.info(`
+serviceName: ${config.get('serviceName')}
+servicePort: ${config.get('servicePort')}
+nextServer1Id: ${config.get('nextServer1Id')}
+nextServer1Url: ${config.get('nextServer1Url')}
+nextServer2Id: ${config.get('nextServer2Id')}
+nextServer2Url: ${config.get('nextServer2Url')}
+fluentHost: ${config.get('fluentHost')}
+fluentPort: ${config.get('fluentPort')}
+zipkinHost: ${config.get('zipkinHost')}
+zipkinPort: ${config.get('zipkinPort')}
+  `);
 });

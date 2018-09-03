@@ -4,25 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./src/index.js"
+    "start": "nodemon ./src/index"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@mcf/logger": "^0.4.5",
-    "@mcf/provision-process": "^0.1.4",
-    "@mcf/request": "^1.0.2",
-    "@mcf/server-boilerplate-middleware": "^0.8.4",
-    "@mcf/tracer": "0.0.8",
-    "convict": "^4.3.2",
-    "fluent-logger": "^2.8.0",
-    "node-fetch": "^2.1.2",
-    "zipkin": "^0.14.0",
-    "zipkin-context-cls": "^0.13.0",
-    "zipkin-instrumentation-express": "^0.14.0",
-    "zipkin-instrumentation-fetch": "^0.14.0",
-    "zipkin-transport-http": "^0.14.0"
+    "@usvc/boilerplate": "^0.3.4",
+    "convict": "^4.3.2"
   },
   "devDependencies": {
     "nodemon": "^1.18.3"
