@@ -18,7 +18,7 @@ Developer-onboarding taking ages because of required supporting services? Having
 
 Enter the world of containerisation in both development and production environments with this short workshop which will cover building container-based deployments friendly applications, containerising services effectively, and deploying them - all with good ol' shell scripting automation for good taste.
 
-> You can find the slides for this workshop at [this link](http://bit.ly/gtcdk8s).  
+> You can find the slides for this workshop at [the bit.ly url, http://bit.ly/gtcdk8s](http://bit.ly/gtcdk8s).  
 > The canonical workshop material is [here at http://github.com/zephinzer/gtcdk8s](http://github.com/zephinzer/gtcdk8s).  
 > A prettified version using Jekyll is [here at http://gtcdk8s.joeir.net](http://gtcdk8s.joeir.net).
 
@@ -33,8 +33,14 @@ This is a hands-on workshop with the most utility for software engineers looking
 
 ## Workshop Objectives
 
-| Objective | Details | Technology Used |
-| :-------- | :------ | :-------------- |
+| Objective | Details |
+| :-------- | :------ |
+| Understand what goes into being cloud native | Understanding the need for health checks, centralised logging and distributed tracing |
+| Creating a container image with Docker | Understand concepts in container images such as system encapsulation, image layering, and quick-win best practices of writing image files |
+| Orchestrating multiple container images with Docker | Understand challenges in orchestrating images and provisioning of an environment |
+| Creating a local environment for Kubernetes | Learn what is and how to use MiniKube |
+| Performing a deployment  | Learn what is and how to use MiniKube |
+
 | Prepare services for container-based deployments | Learn what goes into an application that works well in a container-based deployment model| Node.js |
 | Containerise a custom web service with Docker | Learn how to containerise a custom web application using Docker | Docker |
 | Provision supporting services with Docker | Learn how to provision and manage a development environment using Docker Compose so that developers can start working on actual code without caring about support services which your application depends on | Docker |
