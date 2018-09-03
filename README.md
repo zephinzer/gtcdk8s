@@ -38,14 +38,8 @@ This is a hands-on workshop with the most utility for software engineers looking
 | Understand what goes into being cloud native | Understanding the need for health checks, centralised logging and distributed tracing |
 | Creating a container image with Docker | Understand concepts in container images such as system encapsulation, image layering, and quick-win best practices of writing image files |
 | Orchestrating multiple container images with Docker | Understand challenges in orchestrating images and provisioning of an environment |
-| Creating a local environment for Kubernetes | Learn what is and how to use MiniKube |
-| Performing a deployment  | Learn what is and how to use MiniKube |
-
-| Prepare services for container-based deployments | Learn what goes into an application that works well in a container-based deployment model| Node.js |
-| Containerise a custom web service with Docker | Learn how to containerise a custom web application using Docker | Docker |
-| Provision supporting services with Docker | Learn how to provision and manage a development environment using Docker Compose so that developers can start working on actual code without caring about support services which your application depends on | Docker |
-| Deploying with Kubernetes | Learn what is Kubernetes and experience a deployment on it | Kubernetes |
-| Simulate a production deployment | Learn how to test-run a Kubernetes deployment without touching production (y'know, just in case) | Kubernetes |
+| Running a local Kubernetes | Learn what is and how to use MiniKube |
+| Deploying with Kubernetes | Learn common Kubernetes resources and manifests |
 
 ## Requirements
 ### Required Skills
