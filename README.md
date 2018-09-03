@@ -68,6 +68,8 @@ You will need the following software installed before the workshop starts:
 5. [Node](./00-setup/README.md#node)
 
 ### Required Resources
+You should have cloned this repository into your local machine before the workshop begins. The [instructions are in the setup page](./00-setup/README.md#this-repository).
+
 As conference WiFi can be flaky, please also download a copy of all resources being used:
 
 1. [Docker images](./00-setup/README.md#external-docker-images)

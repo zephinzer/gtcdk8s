@@ -8,19 +8,20 @@ This section should be completed **BEFORE** the workshop and can take up to an h
 ## Objectives
 Install the required software as follows:
 
+1. [This Repository](#this-repository)
 1. [VirtualBox](#virtualbox)
-2. [Docker (with Compose)](#docker-with-compose)
-3. [kubectl](#kubectl)
-4. [MiniKube](#minikube)
-5. [Node](#node)
-6. [Other bootstrapping](#other-bootstrapping)
+1. [Docker (with Compose)](#docker-with-compose)
+1. [kubectl](#kubectl)
+1. [MiniKube](#minikube)
+1. [Node](#node)
+1. [Other bootstrapping](#other-bootstrapping)
 
 
 
 
 
 ## Topic End-Goal
-At the end of this section, you should be able to run `minikube start` and have the following output:
+At the end of this section, you should have this repository cloned locally, and you should be able to run `minikube start` and have the following output:
 
 ```
 Starting local Kubernetes v1.10.0 cluster...
@@ -36,6 +37,21 @@ Loading cached images from config file.
 ```
 
 You should also be able to run `docker`, `docker-compose`, `kubectl`, and `vboxmanage` without any `No command ${CMD} found` errors.
+
+
+
+
+
+## This Repository
+You should have `git` already installed.
+
+Run the following command to clone this repository:
+
+```bash
+git clone https://github.com/zephinzer/gtcdk8s.git
+```
+
+This should create a local copy of the repository on your machine so that you can work on the example applications.
 
 
 
