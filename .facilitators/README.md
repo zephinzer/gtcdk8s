@@ -1,6 +1,7 @@
 # Notes for Facilitators
 
 - [Overall flow](#overall-flow)
+- [Section 1: Cloud Native Applications](#section-1-cloud-native-applications)
 - [Docker Images](#docker-images)
 - [MiniKube Commands](#minikube-commands)
 - [Kubectl Commands](#kubectl-commands)
@@ -20,64 +21,28 @@ The workshop is 2 hours and will proceed in 30 minute blocks - 30 minutes for ea
 
 This will consist of ~10 minutes of introducing concepts and demonstration of final product, along with 20 minutes of self-working through during which we will walk around helping participants.
 
-The workshop material has been designed to be basic, but you'll need to be somewhat acquainted with the following concepts:
 
-### Section 1: Cloud Native Applications
-- NPM commands
-  - `npm install`
-- Docker commands
-  - `docker build`
-  - `docker images`
-  - `docker network ls`
-  - `docker pull`
-  - `docker ps`
-  - `docker run`
-  - `docker top`
-- Docker compose commands
-  - `docker-compose build`
-  - `docker-compose down`
-  - `docker-compose rm`
-  - `docker-compose run`
-  - `docker-compose up`
-- Docker compose manifest
+- - -
 
-### Section 2: Application Containerisation
-- Dockerfile
-- Docker images
-- Docker containers
 
-### Section 3: Environment Provisioning
-- NPM commands
-  - `npm install`
-- NPM's Package.json
-  - `scripts` property
-- Docker commands
-  - `docker build`
-  - `docker images`
-  - `docker network ls`
-- Docker compose commands
-  - `docker-compose build`
-  - `docker-compose down`
-  - `docker-compose rm`
-  - `docker-compose run`
-  - `docker-compose up`
-- Docker compose manifest
+## Section 1 - Cloud Native Applications
+This section covers:
+- Liveness checks
+- Readiness checks
+- Application metrics
+- Centralised logging
+- Distributed tracing
+- Alerting
 
-### Section 4: Deploying Containers in Production
-- MiniKube commands
-  - `minikube start`
-  - `minikube stop`
-  - `minikube delete`
-  - `minikube service ...`
-  - `minikube addons ...`
-- Kubernetes pods
-  - `kubectl get pods`
-- Kubernetes deployments
-  - `kubectl get deployment`
-- Kubernetes services
-  - `kubectl get service`
-- Kubernetes ingresses
-  - `kubectl get ingress`
+Endpoints:
+- [Grafana at http://localhost:43000](http://localhost:43000)
+- [Kibana at http://localhost:45601](http://localhost:45601)
+- [Prometheus at http://localhost:49090](http://localhost:49090)
+- [Zipkin at http://localhost:49411](http://localhost:49411)
+
+Things to note:
+- **Empty Grafana**: Import the Grafana panel JSON from `./01-application/grafana-dashboard/node-panel.json`
+- **No Logs**: Re-add the index (`fluentd-*`) under **Management** > **Index Patterns** > **Create Index Pattern**
 
 
 - - -

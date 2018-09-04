@@ -5,7 +5,7 @@ This section will introduce Docker and some common commands
 Let's have some fun. Run the following in your terminal to *"pull"* an image - basically retrieving the image from the Internet to your local machine:
 
 ```bash
-docker pull bharathshetty4/supermario;
+docker pull bharathshetty4/supermario:latest;
 ```
 
 Next, we run the pulled image, indicating that the resultant container should be named `"supermario"` and should publish itself on the host's (your machine's) port 8080 using its own (the container's) port 8080. The format is `"HOST_PORT":"CONTAINER_PORT"`:
@@ -45,3 +45,19 @@ docker images;
 docker volume ls;
 docker network ls;
 ```
+
+## 1.4 Shut it down
+Run the following to shut down the container:
+
+```bash
+docker stop supermario;
+```
+
+Next, remove the container with:
+
+```bash
+docker rm supermario;;
+```
+
+# Next Steps
+Return to [Application Containerisation](./README.md)
