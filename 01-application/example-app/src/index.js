@@ -49,6 +49,19 @@ Boilerplate.init({
   appCorsWhitelist: [
     `http://localhost:${config.get('servicePort')}`
   ],
+  appReadinessChecks: {
+    simulatedFailure: () => new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          status: false,
+          message: 'simulated error',
+          data: {
+            hello: 'world',
+          },
+        })
+      }, 500);
+    }),
+  },
   serviceId: config.get('serviceName'),
   fluentdHost: config.get('fluentHost'),
   fluentdPort: config.get('fluentPort'),
@@ -142,7 +155,7 @@ app.get('/next-complex/:iteration', (req, res) => {
     {id: 2, uri: '/next-2'},
     {id: 2, uri: '/next-parallel'},
     {id: 2, uri: '/next-sequential'},
-    iteration != 0 ? {id: 2, uri: `/next-complex/${iteration - 1}`} : undefined,
+    iteration !== 0 ? {id: 2, uri: `/next-complex/${iteration - 1}`} : undefined,
     {id: 2, uri: '/error'},
   ].filter((v) => v !== undefined);
   const calls = (() => {
