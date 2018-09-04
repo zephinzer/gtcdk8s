@@ -221,16 +221,4 @@ app.use((err, req, res, next) => {
 const server = app.listen(config.get('servicePort'));
 server.on('listening', (req, res) => {
   logger.info(`${config.get('serviceName')} listening on port http://localhost:${server.address().port}`);
-  logger.info(`
-serviceName: ${config.get('serviceName')}
-servicePort: ${config.get('servicePort')}
-nextServer1Id: ${config.get('nextServer1Id')}
-nextServer1Url: ${config.get('nextServer1Url')}
-nextServer2Id: ${config.get('nextServer2Id')}
-nextServer2Url: ${config.get('nextServer2Url')}
-fluentHost: ${config.get('fluentHost')}
-fluentPort: ${config.get('fluentPort')}
-zipkinHost: ${config.get('zipkinHost')}
-zipkinPort: ${config.get('zipkinPort')}
-  `);
 });
