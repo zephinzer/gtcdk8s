@@ -1,122 +1,128 @@
-# Notes for Facilitators
+# Facilitating Effective Containerisation from Development to Production
+Workshop duration is 2 hours, we have 4 sections, each split into 30 minute blocks.
 
-- [Overall flow](#overall-flow)
-- [Section 1: Cloud Native Applications](#section-1-cloud-native-applications)
-- [Docker Images](#docker-images)
-- [MiniKube Commands](#minikube-commands)
-- [Kubectl Commands](#kubectl-commands)
-- [Other Issues](#other-issues)
+Each 30 minute block will consist of 15 minutes introduction to concepts and demonstration, and the other 15 minutes will be walking around and guiding those who can't follow through.
 
-
-- - -
-
-
-## Overall Flow
-The workshop is 2 hours and will proceed in 30 minute blocks - 30 minutes for each of the following sections:
-
-1. [Cloud Native Applications](../01-application/README.md)
-1. [Application Containerisation](../02-containerising/README.md)
-1. [Environment Provisioning](../03-provisioning/README.md)
-1. [Deploying Containers in Production](../04-deploying/README.md)
-
-This will consist of ~10 minutes of introducing concepts and demonstration of final product, along with 20 minutes of self-working through during which we will walk around helping participants.
-
-
-- - -
-
-
-## Section 1 - Cloud Native Applications
-This section covers:
-- Liveness checks
-- Readiness checks
-- Application metrics
-- Centralised logging
-- Distributed tracing
-- Alerting
-
-Endpoints:
-- [Grafana at http://localhost:43000](http://localhost:43000)
-- [Kibana at http://localhost:45601](http://localhost:45601)
-- [Prometheus at http://localhost:49090](http://localhost:49090)
-- [Zipkin at http://localhost:49411](http://localhost:49411)
-
-Things to note:
-- **Empty Grafana**: Import the Grafana panel JSON from `./01-application/grafana-dashboard/node-panel.json`
-- **No Logs**: Re-add the index (`fluentd-*`) under **Management** > **Index Patterns** > **Create Index Pattern**
-
-
-- - -
-
-
-## Docker Images
-Re: [Other Bootstrapping - External Docker Images](../00-setup/README.md#external-docker-images)
-
-### Online Backup
-The Docker tarballs can be found online at [this url](https://drive.google.com/drive/folders/1Lp_V_O4NeqIzaA1P4BoAOqqtJdxZ-dx4?usp=sharing)
-
-### Pulling all images
-Run the following on the target host to pull all images so they're accessible locally:
-
-```bash
-make pull.images;
-```
-
-### Saving all images to tarballs
-Run the following from the repository root to save all images as tarballs:
-
-```bash
-make save.images;
-```
-
-### Loading all images from tarballs
-Run the following from the repository root to load all images as tarballs:
-
-```bash
-make load.images;
-```
-
-
-- - -
-
-
-## MiniKube Commands
-Here are some commands you can use to debug the MiniKube. Additional notes on how to solve problems can be found [within the setup instructions (click this link)](../00-setup/README.md#minikube-installation-notes).
+Also note that if participants ask, what is demonstrated may not necessarily be what is in this repository. We will play by ear depending on the time, but the core concepts identified below will be demonstrated.
 
 
 
-- - -
+# Section 1: Cloud Native Applications
+This section covers what goes into a containerised application to demonstrate the qualities a container should have, and we will utilise the following services (linked for your convenience if you don't know what it does):
+
+| Service | Description |
+| --- | --- |
+| [FluentD](https://www.fluentd.org/) | Logs collator |
+| [Kibana](https://www.elastic.co/products/kibana) | Logs visualiser |
+| [Grafana](https://grafana.com/) | Metrics dashboard |
+| [Prometheus](https://prometheus.io/) | Metrics collector |
+| [ElasticSearch](https://www.elastic.co/products/elasticsearch) | Non-relational database for logs |
+| [Zipkin](https://zipkin.io/) | Distrubted tracing |
+
+The exposed services will be available at:
+
+| Service | URL |
+| --- | --- |
+| Kibana | [http://localhost:5601](http://localhost:5601) |
+| Grafana | [http://localhost:3000](http://localhost:3000) |
+| Prometheus | [http://localhost:9090](http://localhost:9090) |
+| Zipkin | [http://localhost:9411](http://localhost:9411) |
+
+Participants will be brought through deploying a simulated cloud environment, triggering an error, and tracing it using the context ID.
+
+- Use Zipkin to identify the failed request, get the traceId and spanId
+- Use Kibana and query for the spanId to view the error
+- Use Kibana and query for the traceId to view all requests leading up to the error
+- Prometheus is to demonstrate the metrics
+- Grafana is to demonstrate monitoring and alerting (might not have enough time to go through alerting, so we might skip that)
 
 
-## Kubectl Commands
-The following is a list of commands you can use to diagnose problems with the participant's machines.
 
-All deployments will be done on the `default` namespace **EXCEPT** for the Ingress controller (note: not the Ingress, but the Ingress controller) which we have no control over since it's MiniKube's custom add-on. The Ingress controller is deployed in the `kube-system` namespace. To specify a namespace, simply add `-n <namespace_id>` to any command.
+# Section 2: Containerising an Application
+This section will demonstrate writing a Dockerfile in development, optimising the Dockerfile, and debugging a Docker image.
 
-```bash
-# get all deployments
-kubectl get deploy;
+Commands you should be familiar with:
+- `docker build .`
+- `docker build -t image_name .`
+- `docker run image_name`
+- `docker run -it image_name`
+- `docker run -it --entrypoint=/bin/sh image_name`
+- `docker run -it --name container_name --entrypoint=/bin/sh image_name`
+- `docker ps`
+- `docker ps -a`
+- `docker exec -it container_name /bin/sh`
+- `docker top container_name`
+- `docker stats container_name`
+- `docker inspect container_name`
+- `docker rm container_name`
+- `docker rmi image_name`
 
-# get all services
-kubectl get svc;
+Docker directives you should be familiar with:
+- `FROM repo:tag`
+- `RUN somecommand`
+- `WORKDIR /where/we/begin`
+- `COPY ./here /there`
 
-# get all ingresses
-kubectl get ing;
-
-# get the ingress controller
-kubectl get deploy nginx-ingress-controller -n kube-system;
-# note: if this is empty, participant has likely not enabled it on their Minikube, enable it with `minikube addons enable ingress`,
-```
+The section will proceed with using a Docker image (a Supermario image), followed by writing one for an example application which uses a native NPM module. The native module will add additional dependencies which we will use to demonstrate layer caching during development starting from a blank file.
 
 
-- - -
+
+# Section 3: Provisioning an Environment
+> This section is pretty time consuming and we may have to cut short on this
+
+This section covers Docker Compose and how to provision an environment for Wordpress, followed by provisioning an environment for a bespoke application we've never seen before.
+
+WordPress requires a MySQL database, so it's a simple deployment with 2 services - WordPress and MySQL.
+
+The bespoke application will be tougher. It is a React application which includes a websocket port that participants will have to decipher. We will:
+
+1. run it locally first to demonstrate its working followed 
+1. check out what's missing
+1. check out the ports it uses
+1. provision the support services
+1. configure the development environment to work with hot-reloading
+
+You should be familiar with the following Docker Compose commands:
+- `docker-compose up`
+- `docker-compose -f ./path/to/docker-compose.yml up`
+- `docker-compose -f ./path/to/docker-compose.yml build`
+- `docker-compose -f ./path/to/docker-compose.yml down`
+- `docker-compose -f ./path/to/docker-compose.yml rm`
+
+Since `npm` is also used, you should know:
+- `npm run $SCRIPT_NAME`
 
 
-## Other Issues
 
-### Section 4
-#### Default Backend
-If participant hits `default backend - 404`, this means the Ingress is not property configured. Check that:
+# Section 4: Deploying Containers in production
+> Since we will likely overrun on Section 3, this section will just use the answers instead (if we are behind schedule)
 
-- `/etc/hosts` is configured to have an IP address corresponding to the value returned by `minikube ip` pointing to the hostname `whack-a-pod.local`.
-- If that fails, do a `curl -vv http://whack-a-pod.local >/dev/null` and check that the IP corresponds to the IP of the VM (`minikube ip`)
-- Verify that `kubectl get ingress wap-ingress` returns something and that the `HOSTS` column points to `whack-a-pod.local`
+This section covers deploying containers in a Kubernetes cluster. Participants will run MiniKube to create their own single node cluster. This should have been done at the start of the workshop so it should be up.
+
+The application we are deploying is called Whack-A-Pod and it's something like Whack-A-Mole, except we are destroying pods to demonstrate how Kubernetes automatically restarts pods that are down. The performance ain't great, so you can explain it to participants that the lag we will be seeing won't happen in a production grade setup.
+
+You should be familiar with the following `kubectl` commands:
+- `kubectl apply -f ./manifest.yml`
+- `kubectl get pods`
+- `kubectl describe pods`
+- `kubectl get pod $POD_NAME`
+- `kubectl top pod $POD_NAME`
+- `kubectl delete pods`
+- `kubectl get deployments`
+- `kubectl describe deployments`
+- `kubectl delete deployments`
+- `kubectl get services`
+- `kubectl describe services`
+- `kubectl delete services`
+- `kubectl get ingress`
+- `kubectl describe ingress`
+- `kubectl delete ingress`
+
+You should also understand:
+- `minikube up`
+- `minikube status`
+- `minikube service $SERVICE_NAME`
+- `minikube service list`
+- `minikube addons list`
+- `minikube addons enable $ADDON_ID`
+- `minikube down`

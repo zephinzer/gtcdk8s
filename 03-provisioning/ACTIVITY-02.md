@@ -3,6 +3,8 @@ In this activity, we see how we can provision an environment for developers to u
 
 The example application can be found at `./example-app` relative to this directory.
 
+Your primary task is to create a `docker-compose.yml` located at `./example-app/provisioning/compose/docker-compose.yml` to run the application.
+
 ## 2.1 Understanding the Application
 From the files in `./example-app`, we are looking at a JavaScript application - we observe a `./package.json` which is the dependency specification file for Node apps.
 
@@ -150,7 +152,7 @@ You'll see our seed posts. Try the user interface - create a new post, delete a 
 It should now be obvious this is a service with a database, a UI component, and an API component. We've already got the database running as part of our Compose file. Let's proceed by adding the API component.
 
 ### 2.2.1 Creating the Dockerfile
-Create a new `Dockerfile` at `./provisioning/images/` relative to the `./example-app` directory with the following content:
+A `Dockerfile` exists `./provisioning/images/` relative to the `./example-app` directory with the following content:
 
 ```dockerfile
 FROM node:8.11.4-alpine
@@ -283,7 +285,7 @@ Be able to run `npm run dev` from a clean slate and have migrations and seeds in
 3. Set the `predev` script to run the database updating service
 
 #### Answers
-> A completed working Docker Compose file can be found at [./.example-app/provisioning/compose/activity-2.docker-compose.yml](./.example-app/provisioning/compose/activity-2.docker-compose.yml)
+> A completed working Docker Compose file can be found at [./composes/activity-2.challenge.docker-compose.yml](./composes/activity-2.challenge.docker-compose.yml)
 
 > A completed working `package.json` file can be found at [./.example-app/package.json](./.example-app/package.json)
 
