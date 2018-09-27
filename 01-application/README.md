@@ -25,7 +25,7 @@ All container-ready applications should minimally contain the following code ins
 [Click here to access Activity 1](./ACTIVITY-01.md).
 
 # Next Steps
-Click here to [move on to Application Containerisation](../02-containerisating/README.md).
+Click here to [move on to Application Containerisation](../02-containerising/README.md).
 
 # References & Further Reading
 1. [The Twelve-Factor App](https://12factor.net/)
