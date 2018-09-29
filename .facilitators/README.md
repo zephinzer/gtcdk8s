@@ -36,6 +36,19 @@ Participants will be brought through deploying a simulated cloud environment, tr
 - Prometheus is to demonstrate the metrics
 - Grafana is to demonstrate monitoring and alerting (might not have enough time to go through alerting, so we might skip that)
 
+## Activity 1 Checklist
+- [ ] Give `777` permission to data directory
+- [ ] Run `docker-compose build`
+- [ ] Run `docker-compose up`
+- [ ] Curl http://localhost:40001
+- [ ] Curl http://localhost:40001/healthz
+- [ ] Curl http://localhost:40001/readyz
+- [ ] Set up Kibana indices
+- [ ] Set up Grafana dashboard
+- [ ] Curl http://localhost:40001/next-complex/2
+- [ ] View error from Zipkin at http://localhost:49411
+- [ ] View error logs from Kibana at http://localhost:5601
+
 
 
 # Section 2: Containerising an Application
