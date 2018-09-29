@@ -86,5 +86,6 @@ Check out his articles at [https://medium.com/@joeir](https://medium.com/@joeir)
 # Licensing
 Code in this repository is licensed under the MIT license as [per the LICENSE file](./LICENSE).
 
-Content in this repository is licensed under the [Creative Commons Attribution-ShareAlike 3.0 Singapore](http://creativecommons.org/licenses/by-sa/3.0/sg/) license.
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/sg/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/sg/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/sg/">Creative Commons Attribution-ShareAlike 3.0 Singapore License</a>.
+Content in this repository is licensed under the [Creative Commons Attribution-ShareAlike 3.0 Singapore](http://creativecommons.org/licenses/by-sa/3.0/sg/) license.  
+
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/sg/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/sg/88x31.png" /></a>
