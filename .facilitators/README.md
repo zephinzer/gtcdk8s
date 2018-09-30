@@ -7,6 +7,15 @@ Also note that if participants ask, what is demonstrated may not necessarily be 
 
 
 
+# Section 0: Setting Up
+
+To check a participant's machine for correctness, run:
+
+- `vboxmanage --version`
+- `kubectl version --client`
+- `node -v`
+
+
 # Section 1: Cloud Native Applications
 This section covers what goes into a containerised application to demonstrate the qualities a container should have, and we will utilise the following services (linked for your convenience if you don't know what it does):
 
@@ -36,7 +45,7 @@ Participants will be brought through deploying a simulated cloud environment, tr
 - Prometheus is to demonstrate the metrics
 - Grafana is to demonstrate monitoring and alerting (might not have enough time to go through alerting, so we might skip that)
 
-## Activity 1 Checklist
+## Section 1 Activity 1 Checklist
 - [ ] Give `777` permission to data directory
 - [ ] Run `docker-compose build`
 - [ ] Run `docker-compose up`
@@ -78,6 +87,57 @@ Docker directives you should be familiar with:
 
 The section will proceed with using a Docker image (a Supermario image), followed by writing one for an example application which uses a native NPM module. The native module will add additional dependencies which we will use to demonstrate layer caching during development starting from a blank file.
 
+## Section 2 Activity 1 Checklist
+
+- [ ] Pull the Docker image from Docker Hub
+- [ ] `docker images` - show the pulled image
+- [ ] `docker ps` - see that there's no contianer
+- [ ] Run the Docker image
+- [ ] `docker ps` - see that there's a container
+- [ ] `docker top supermario` - see the system usage of the container
+- [ ] `docker stat supermario` - monitor the system usage of the container
+- [ ] `docker kill supermario` - kill the container
+- [ ]  `docker ps` - show that container doesn't exist
+- [ ] `docker ps -a` - show that we can see all dead containers
+
+## Section 2 Activity 2 Checklist
+
+### Building an Image
+- [ ] Navigate into `./02-containerising/example-app` before starting
+- [ ] Create new Dockerfile there
+- [ ] Add `FROM alpine:3.2`
+- [ ] Add `RUN apk update`
+- [ ] Add `RUN apk add --no-cache nodejs`
+- [ ] Add `WORKDIR /app`
+- [ ] Add `COPY . /app`
+- [ ] Add `RUN npm install`
+- [ ] Add entrypoint as `[ "npm", "start" ]`
+- [ ] Witness build failure (no python)
+- [ ] Add `RUN apk add python`
+- [ ] Witness build failure (no make)
+- [ ] Add `RUN apk add make`
+- [ ] Witness build failure (no g++)
+- [ ] Add `RUN apk add g+++`
+- [ ] Witness runtime failure (wrong version of Node)
+- [ ] Upgrade version of Alpine to 3.8 (note the lack of layer caching)
+- [ ] Witness build failure (no npm)
+- [ ] Add `RUN apk add npm`
+
+### Optimising the Image for Development
+- [ ] Change the `"BYE"` in the `./index.js` of the example app to `"HI"`
+- [ ] Run the build again (note: `npm install` is not cached)
+- [ ] Add `COPY ./package.json /app/package.json` before `npm install`, add `COPY ./package-lock.json /app/package-lock.json` before `npm install`, shift `COPY . /app` to after `npm install`
+- [ ] Change the `"BYE"` in the `./index.js` of the example app to `"ni hao"`
+- [ ] Run the build again (note: `npm install` is cached)
+
+### Optimising the Image for Production
+- [ ] `docker images | head -n 5` - check size of image - 243 MB
+- [ ] Compress dependency installing steps into `RUN apk add --update --no-cache nodejs python make g++ npm`
+- [ ] Run build and checkout image sizes - 240 MB
+- [ ] Remove the dependencies at the end of the Dockerfile (add `apk del python make g++`) and checkout image size - 242 MB
+- [ ] String together the `RUN`s, build and checkout image size - 57 MB
+- [ ] Add `npm` as a dependency to be deleted and change `ENTRYPOINT` to `[ "node", "index.js" ]`. Run build and checkout image size - 39 MB
+- [ ] `docker run -it --entrypoint=/bin/sh a2`
 
 
 # Section 3: Provisioning an Environment
