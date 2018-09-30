@@ -59,6 +59,9 @@ Participants will be brought through deploying a simulated cloud environment, tr
 - [ ] View error logs from Kibana at http://localhost:5601
 
 
+- - -
+
+
 
 # Section 2: Containerising an Application
 This section will demonstrate writing a Dockerfile in development, optimising the Dockerfile, and debugging a Docker image.
@@ -140,6 +143,9 @@ The section will proceed with using a Docker image (a Supermario image), followe
 - [ ] `docker run -it --entrypoint=/bin/sh a2`
 
 
+- - -
+
+
 # Section 3: Provisioning an Environment
 > This section is pretty time consuming and we may have to cut short on this
 
@@ -165,6 +171,51 @@ You should be familiar with the following Docker Compose commands:
 Since `npm` is also used, you should know:
 - `npm run $SCRIPT_NAME`
 
+## Section 3 Activity 1 Checklist
+
+- [ ] Visit [https://hub.docker.com/_/wordpress/](https://hub.docker.com/_/wordpress/)
+- [ ] Visit [https://hub.docker.com/_/mysql/](https://hub.docker.com/_/mysql/)
+- [ ] Create compose manifest at `./03-provisioning/docker-compose.yml`
+- [ ] Add WordPress service with image `wordpress:4.9.8-php7.1-apache`
+- [ ] Expose guest ports 80 to local 8080
+- [ ] `docker-compose up`
+- [ ] Go to [http://localhost:8080](http://localhost:8080) and attempt to setup WordPress - note that there's no database!
+- [ ] Add MySQL service with image `mysql:5.7.23` (no need to expose ports since its an internal support service)
+- [ ] Add MySQL environment variables (reference the DockerHub description)
+- [ ] `docker-compose up`
+
+## Section 3 Activity 2 Checklist
+- [ ] Use compose manifest at `./03-provisioning/example-app/docker-compose.yml`
+- [ ] Add `database` service with a set of default variables
+- [ ] Add ports to `app` service mapping 8080 to 8080
+- [ ] Add entrypoint to `app` service `[ "npm", "run", "dev:ui" ]`
+- [ ] Open [http://localhost:8080](http://localhost:8080) and play with it
+- [ ] See browser console for error messages (note inability to connect to localhost:8081)
+- [ ] Add ports to `app` service mapping 8081 to 8081
+- [ ] Open [http://localhost:8080](http://localhost:8080) and play with it again (note missing service at localhost:8000)
+- [ ] Add `api` service similar to `app` but with exposed port at 8000
+- [ ] `docker-compose up` (note `ECONNREFUSED` error)
+- [ ] Add environment variables to `api` referencing the `./knexfile.js` (set `DB_HOST` to `"database"`)
+- [ ] `docker-compose up` (note access denied to database `'blog'`)
+- [ ] Change value of environment variable `MYSQL_DATABASE` in the `database` service to `blog`
+- [ ] `docker-compose up` (note that a table doesn't exist)
+- [ ] Add `db-updater` service similar to `api` but with entrypoint set to NPM script `db:update` and `ports` removed
+- [ ] Add `depends_on` property for `db-updater` service and specify `- database` as a dependency
+- [ ] `docker-compose up -V db-updater` (note that migrations were run)
+- [ ] `docker-compose up`
+- [ ] Open [http://localhost:8080](http://localhost:8080) again
+
+### Development Environment (if there's time)
+- [ ] Open the file at `./src/home/HomeComponent.js` and change the `"Example Application"` text at line 28 to `"My Application"`
+- [ ] Check [http://localhost:8080](http://localhost:8080) for changes (note nothing has changed)
+- [ ] Add the `volumes` array property under the `app` service with `- "./src:/app/src"` as a member
+- [ ] `docker-compose up`
+- [ ] Open [http://localhost:8080](http://localhost:8080) again
+- [ ] Change the `"My Application"` to `"Awesome DIY Blog Here"`
+- [ ] Open [http://localhost:8080](http://localhost:8080) again and note that hot-reloading has happened
+
+
+- - -
 
 
 # Section 4: Deploying Containers in production

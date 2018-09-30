@@ -1,5 +1,5 @@
 FROM node:8.11.4-alpine
-ARG ENV_FLAG="--production"
+ARG ENV_FLAG="--development"
 WORKDIR /app
 COPY ./package.json /app/package.json
 COPY ./package-lock.json /app/package-lock.json

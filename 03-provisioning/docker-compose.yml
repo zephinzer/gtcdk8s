@@ -1,0 +1,13 @@
+version: "3.5"
+services:
+  wordpress:
+    image: wordpress:4.9.8-php7.1-apache
+    ports:
+    - 8080:80
+  mysql:
+    image: mysql:5.7.23
+    environment:
+    - MYSQL_ROOT_PASSWORD=password
+    - MYSQL_DATABASE=blog
+    - MYSQL_USER=username
+    - MYSQL_PASSWORD=password
