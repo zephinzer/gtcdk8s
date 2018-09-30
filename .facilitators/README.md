@@ -250,3 +250,27 @@ You should also understand:
 - `minikube addons list`
 - `minikube addons enable $ADDON_ID`
 - `minikube down`
+
+## Section 4 Activity 1 Checklist
+- [ ] `minikube status` (ensure all is right)
+- [ ] `kubectl get pods`
+- [ ] `kubectl get pods --all-namespaces` (note K8s services)
+- [ ] `kubectl create serviceaccount wap-admin`
+- [ ] `kubectl create clusterrolebinding wap-admin --clusterrole=cluster-admin --serviceaccount=default:wap-admin`
+- [ ] `minikube addons list`
+- [ ] `minikube addons enable ingress`
+- [ ] `minikube addons enable metrics-server`
+- [ ] `minikube addons enable heapster`
+- [ ] `kubectl apply -f ./.manifests/deployment.admin.yaml`
+- [ ] `kubectl apply -f ./.manifests/deployment.api.yaml`
+- [ ] `kubectl apply -f ./.manifests/deployment.game.yaml`
+- [ ] `kubectl get deployments`
+- [ ] `kubectl apply -f ./.manifests/service.admin.yaml`
+- [ ] `kubectl apply -f ./.manifests/service.api.yaml`
+- [ ] `kubectl apply -f ./.manifests/service.game.yaml`
+- [ ] `kubectl get services`
+- [ ] `kubectl apply -f ./.manifests/ingress.whack-a-pod.local.yaml`
+- [ ] `kubectl get ingresses -w` (wait till it has an ADDRESS)
+- [ ] `minikube ip` (remember this ip address)
+- [ ] `sudo vim /etc/hosts` (associate `whack-a-pod.local` with the output of `minikube ip`)
+- [ ] `open http://whack-a-pod.local/advanced.html`
