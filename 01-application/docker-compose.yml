@@ -24,6 +24,8 @@ services:
     ## for debugging/development:
     volumes:
       - "./example-app/src:/app/src:Z"
+      - "./example-app/package.json:/app/package.json:Z"
+      - "./example-app/package-lock.json:/app/package-lock.json:Z"
     ports:
       - "40001:40001"
   application_2:
