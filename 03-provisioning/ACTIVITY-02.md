@@ -308,4 +308,4 @@ Another UNIX-specific trick would be to force MySQL to run as the same user as y
 
 # Next Steps
 
-We're done here [back to the main Section on Provisioning Environments](./READNE.md).
+We're done here [back to the main Section on Provisioning Environments](./README.md).

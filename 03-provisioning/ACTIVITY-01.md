@@ -105,4 +105,4 @@ We're done here!
 # Next Steps
 Move on to [Activity 2: Provisioning a Development Environment](./ACTIVITY-02.md).
 
-Or go [back to the main Section on Provisioning Environments](./READNE.md).
+Or go [back to the main Section on Provisioning Environments](./README.md).
