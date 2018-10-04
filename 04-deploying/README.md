@@ -66,6 +66,9 @@ An Ingress is functionally like a reverse proxy. It directs an incoming request 
 # Activity 1: Create and Deploy an Application
 Click [here to go to the activity readme](./ACTIVITY-01.md).
 
+# Next Steps
+Click here to [head back to the index section](../README.md).
+
 # References & Further Reading
 - [Official Kubernetes Reference](https://kubernetes.io/docs/reference/) (they have really good documentation)
 - [Google Kubernetes Engine by Google](https://cloud.google.com/kubernetes-engine/)
