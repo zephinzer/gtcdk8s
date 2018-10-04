@@ -40,7 +40,7 @@ Click here to [start deploying a WordPress service locally](./ACTIVITY-01.md).
 Click here to [start provisioning an environment for developing a custom application](./ACTIVITY-02.md).
 
 # Next Steps
-Move on to the next section on [Deploying Containers in Production](../04-deploying.md).
+Move on to the next section on [Deploying Containers in Production](../04-deploying/README.md).
 
 # References
 - [Compose file version 3 reference](https://docs.docker.com/compose/compose-file/)
